@@ -278,7 +278,7 @@ def fluorescence_spectra(radfield,obj_vel,solar_dist,raw_lines,raw_levs,ritz_col
         #index that we stored in the rel_levs array.
         upper_pop = pops[mapped_index] #Grab the (normalized) population
         energy = h * c / (wavelength * 1e-9) #Calculate transition energy from air wavelength.
-        line_intens = upper_pop * energy * lines[i,5] #calculate line intensity from above
+        line_intens = upper_pop * energy * lines[i,aval_col] #calculate line intensity from above
         intens[i,0] = wavelength #Save (air) wavelength
         intens[i,1] = line_intens #Save intensity.
     #rescale to maximum wavelength
