@@ -272,7 +272,7 @@ def fluorescence_spectra(radfield,obj_vel,solar_dist,raw_lines,raw_levs,ritz_col
     intens = np.zeros((len(lines[:,0]),2))   
     #We'll save it as: (0) wavelength, (1) intensity (arb. units.)
     for i in range(0,len(intens[:,0])):
-        wavelength = lines[i,0]
+        wavelength = idx[i,2]
         upper_pop_index_unmapped = int(idx[i,1])
         mapped_index = int(rel_levs[upper_pop_index_unmapped,2]) #the line upper level index is in the original 'NIST' mapping. We need the 'relevant'
         #index that we stored in the rel_levs array.
