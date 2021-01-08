@@ -2,7 +2,7 @@
 """
 Fluorescence Model using NIST data
 SJB
-Released tentatively on 01-04-2021
+Released on 01-08-2021
 ------------------------
 """
 import numpy as np
@@ -113,7 +113,7 @@ def fluorescence_spectra(radfield,obj_vel,solar_dist,raw_lines,raw_levs,ritz_col
     solar_dist: distance in meters from sun
     raw_lines: string array of NIST line data. Wavelengths must be in nm
     raw_levs: string array of NIST level data. Ensure both lines and levels have no headers. Energies must be in cm^-1
-    ritz_col: column for ritz wavelengths (in VACUUM)
+    ritz_col: column for ritz wavelengths (in AIR)
     lower_col: column of lower energy in lines array. Note 0 indexing, and energies must be in cm^-1
     upper_col: column of upper energy. Same limitations as 'lower_col'
     aval_col: column for A values in lines array.
