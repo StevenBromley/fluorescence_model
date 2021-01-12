@@ -22,7 +22,8 @@ def doppler(wavelength,velocity):
     rest_wavelength = wavelength
     top = 1 + (velocity/c)
     bottom = 1 - (velocity/c)
-    frac_term = math.sqrt(top/bottom)
+    #Corrected sqrt error; no sqrt should be there. 1-12-2021
+    frac_term = top/bottom
     shifted_wavelength = rest_wavelength * frac_term
     return(shifted_wavelength)
 
