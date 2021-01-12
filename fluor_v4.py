@@ -20,11 +20,9 @@ def doppler(wavelength,velocity):
     c = 299792458
     vel = velocity #assuming m/s
     rest_wavelength = wavelength
-    top = 1 + (velocity/c)
-    bottom = 1 - (velocity/c)
+    frac = 1 + (velocity/c)
     #Corrected sqrt error; no sqrt should be there. 1-12-2021
-    frac_term = top/bottom
-    shifted_wavelength = rest_wavelength * frac_term
+    shifted_wavelength = rest_wavelength * frac
     return(shifted_wavelength)
 
 def blackbody_wave(wavelength_range, temp):
