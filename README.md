@@ -4,6 +4,7 @@ The newest version of the model code is contained in "fluor_v6.py"
 Several problems in previous versions were located and corrected:
 
 -Improper integration over solid angle
+
 -Blackbody function unit issues
 
 -Solar flux handling was moved to a separate function; now, the flux is calculated prior to the main function call and passed in, allowing a user to re-run the model
@@ -12,7 +13,7 @@ without requiring several minutes to generate the integrated fluxes used to gene
 -Files to generate error uncertainties described in the .pdf are being prepared.
 
 ----
-
+                                                      Downloading Solar Spectra and Running the Test Script
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.5 km/s w.r.t. the sun
 To run the model, do the following:
 
