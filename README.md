@@ -44,4 +44,5 @@ To run a different system (say Ni II), download the line lists and energy levels
 4. Download the levels for that system from https://physics.nist.gov/PhysRefData/ASD/levels_form.html
 5. Save as tab-delimited, and repeat the same procedure as the lines. Take care with J values, remove headers, and resave. These files will then be passed into the model code in the "raw_lines" and "raw_levs" variables.
 6. Change the example script over to the relevant filenames for the lines/levels file and change the "species_string" variable to the appropriate species. This variable is not critical for the model, but determines the names of the output files when the synthetic spectra plot and model outputs are saved.
+7. Note that the variables for solar distance and object velocity are defaulted to those of comet Hyakutake on a given day (1.02 AU, 36.5 km/s TOWARD the sun). If interested in simply testing the model, set solar_dist to 1 AU (in meters) and obj_vel = 0.
 
