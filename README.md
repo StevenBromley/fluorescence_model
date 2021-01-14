@@ -34,6 +34,7 @@ You want to download this file and process it to 2 column format with col0 = wav
 
 3. With all of the files in the same directory, run the script "Ni I spectra v6.py" It should take ~6min (3min per solar spectra). 
 4. A separate script, "Ni I spectra vs Hyakutake v6.py" is built on the script in step 3 and will plot the synthetic spectra vs spectra from comet Hyakutake if the user has that data.
+5. On a 2020 Macbook Pro, the test script runs in ~3minutes, which is dominated by the pre-calculation of flux around each doppler shifted transition wavelength. This 3 minutes is for 500 transitions; one can except ~1000 transitions to take ~6 minutes to run. The code only uses 1 CPU.
 
 ----
                                       To run the model for a different species, do the following:
