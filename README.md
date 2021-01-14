@@ -24,7 +24,7 @@ The test script requires this file be saved as 'kurucz_solar_spectra.txt'
 The measured Kurucz solar spectra can be found at 
 http://kurucz.harvard.edu/sun/irradiance2005/irradrelwl.dat
 
-You want to download this file and save it to 2 column format with col0 = wavelength and col1 = flux. Don't change the units or make any adjustments to the values in these files; the Ni I script shows what units are needed and manipulates as necessary. Both files are too large to store on github.
+You want to download this file and process it to 2 column format with col0 = wavelength and col1 = flux; for this, you can use excel, Python, or whichever your preferred tool is. Don't change the units or make any adjustments to the values in these files; the Ni I script shows what units are needed and manipulates as necessary. Both files are too large to store on github.
 
 3. With all of the files in the same directory, run the script "Ni I spectra v6.py" It should take ~6min (3min per solar spectra). 
 4. A separate script, "Ni I spectra vs Hyakutake v6.py" is built on the script in step 3 and will plot the synthetic spectra vs spectra from comet Hyakutake if the user has that data.
