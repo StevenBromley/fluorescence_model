@@ -1,5 +1,13 @@
 # fluorescence_model
 
+NOTICE 01-13-2021
+The 'supplement' with blackbody spectrum feature is currenltly broken. If using the code, please set 'supp=False' in the model function call.
+Thanks,
+Steve
+
+--
+
+
 The model code is contained in "fluor_v4.py"
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.5 km/s w.r.t. the sun
 
