@@ -2,10 +2,13 @@
 
 The newest version of the model code is contained in "fluor_v6.py"
 Several problems in previous versions were located and corrected:
+
 -Improper integration over solid angle
 -Blackbody function unit issues
+
 -Solar flux handling was moved to a separate function; now, the flux is calculated prior to the main function call and passed in, allowing a user to re-run the model
 without requiring several minutes to generate the integrated fluxes used to generate absorption/stimulated emission rates.
+
 -Files to generate error uncertainties described in the .pdf are being prepared.
 
 ----
@@ -34,11 +37,12 @@ You want to download this file and process it to 2 column format with col0 = wav
 4. A separate script, "Ni I spectra vs Hyakutake v6.py" is built on the script in step 3 and will plot the synthetic spectra vs spectra from comet Hyakutake if the user has that data.
 
 ----
+                                      To run the model for a different species, do the following:
 To run a different system (say Ni II), download the line lists and energy levels from NIST:
 1. Query https://physics.nist.gov/PhysRefData/ASD/lines_form.html for lines of e.g. "Ni II", and under "Advanced Options" ask for only lines with transition probabilities. Get the data in tab-delimited form. Save as a .txt.
 2. Open the .txt file in excel. Note that if the J values are half-integers, excel defaults to reading them as dates. You want to set those columns to "text". Double-check that excel has opened them correctly. By opening this file in excel, excess "" characters are removed automatically.
 3. Remove all headers; depending on the species, there may be multiple: (1) at top of page for vacuum wavelengths, (1) at the beginning of air wavelengths, and (1) around 2000nm to indicate the switch to vacuum wavelengths for IR transitions. Remove these headers if present.
 4. Download the levels for that system from https://physics.nist.gov/PhysRefData/ASD/levels_form.html
 5. Save as tab-delimited, and repeat the same procedure as the lines. Take care with J values, remove headers, and resave. These files will then be passed into the model code in the "raw_lines" and "raw_levs" variables.
-
+6. Change the example script over to the relevant filenames for the lines/levels file and change the "species_string" variable to the appropriate species. This variable is not critical for the model, but determines the names of the output files when the synthetic spectra plot and model outputs are saved.
 
