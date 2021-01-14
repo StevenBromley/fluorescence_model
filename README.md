@@ -13,7 +13,7 @@ without requiring several minutes to generate the integrated fluxes used to gene
 -Files to generate error uncertainties described in the .pdf are being prepared.
 
 ----
-                                                      Downloading Solar Spectra and Running the Test Script
+                                      Downloading Solar Spectra and Running the Test Script
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.5 km/s w.r.t. the sun
 To run the model, do the following:
 
@@ -26,8 +26,6 @@ The computed Kurucz solar spectra can be found at
 http://kurucz.harvard.edu/stars/sun/
 and download the file marked: fsunallp.100000resam3   13-Apr-2011 12:03   46M  
 The test script requires this file be saved as 'kurucz_solar_spectra.txt'
-
-\textbf{TEST}
 
 The measured Kurucz solar spectra can be found at 
 http://kurucz.harvard.edu/sun/irradiance2005/irradrelwl.dat
