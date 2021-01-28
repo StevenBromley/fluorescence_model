@@ -1,40 +1,33 @@
 # fluorescence_model
 
-The newest version of the model code is contained in "fluor_v6.py"
+The newest version of the model code is contained in "fluor_v7.py"
 Several problems in previous versions were located and corrected:
-
--Improper integration over solid angle
-
--Blackbody function unit issues
-
--Solar flux handling was moved to a separate function; now, the flux is calculated prior to the main function call and passed in, allowing a user to re-run the model
-without requiring several minutes to generate the integrated fluxes used to generate absorption/stimulated emission rates.
-
--Files to generate error uncertainties described in the .pdf are being prepared.
-
+-A single solar spectrum is now provided to give the user the 'best of both worlds'; it now uses measured solar spectra, and computed high-resolution spectra elsewhere
+-Added in handling of line profiles during flux integration; currently, only the 'Doppler' profile is available. For nearly all cases, the natural linewidth is insignificant, and the gaussian broadening dominates. Voigt and Lorentzian profiles will be added in a future release.
+-Implemented new search algorithm when generating integrating fluxes; compute time down by factor of ~40. (now ~5s instead of ~3min). 
 ----
                                       Downloading Solar Spectra and Running the Test Script
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.5 km/s w.r.t. the sun
 To run the model, do the following:
 
 1. Download all files in this github repository,
-2. The code requires Kurucz solar spectra; you can use a computed or measured spectra. If a wavelength is present in the lines files but absent in the imported solar spectrum,
-the code defaults to using a blackbody to approximate the flux at those wavelengths. Tests for Ni I using both computed and measured solar spectra show some variation in line height, but first tests show scatter comparable to the uncertainty introduced by the Einstein A value uncertainties (see pdf for error estimate procedure). 
-
-The attached script uses both the measured and computed spectra if the user is interested in comparing. 
-The computed Kurucz solar spectra can be found at
-http://kurucz.harvard.edu/stars/sun/
-and download the file marked: fsunallp.100000resam3   13-Apr-2011 12:03   46M  
-The test script requires this file be saved as 'kurucz_solar_spectra.txt'
-
-The measured Kurucz solar spectra can be found at 
-http://kurucz.harvard.edu/sun/irradiance2005/irradrelwl.dat
-
-You want to download this file and process it to 2 column format with col0 = wavelength and col1 = flux; for this, you can use excel, Python, or whichever your preferred tool is. Don't change the units or make any adjustments to the values in these files; the Ni I script shows what units are needed and manipulates as necessary. Both files are too large to store on github.
-
-3. With all of the files in the same directory, run the script "Ni I spectra v6.py" It should take ~6min (3min per solar spectra). 
-4. A separate script, "Ni I spectra vs Hyakutake v6.py" is built on the script in step 3 and will plot the synthetic spectra vs spectra from comet Hyakutake if the user has that data.
-5. On a 2020 Macbook Pro, the test script runs in ~3minutes, which is dominated by the pre-calculation of flux around each doppler shifted transition wavelength. This 3 minutes is for 500 transitions; one can except ~1000 transitions to take ~6 minutes to run. The code only uses 1 CPU.
+2. The code requires a solar spectrum with the following format: Col0 (wavelength; nm), Col1(flux; W / m^2 / nm). The provided file "kurucz_150nm-81um.txt" provides fluxes in the range 150nm out to 81 um from the following:
+  a. Kurucz high-resolution *computed* spectra from 150 - 300nm, 
+  b. Kurucz high-resolution *measured* spectra from a FTS spanning 300 - 1000nm;
+  c. Kurucz high-resolution *computed* spectra from 1 um - 81 um. 
+  d. For wavelengths outside these bounds, a blackbody is used to estimate the flux. 
+3. Set the parameters for the model. The important parameters are described below:
+  (A) solar_dist: heliocentric distance of the emitter; end result must be in meters
+  (B) obj_velocity: heliocentric velocity (defined positive away from sun). Must be in m/s
+  (C) m_species: mass of the emitting species in kg; used for doppler broadening profiles
+  (D) t_comet: temperature of the emitting species in Kelvin; used for doppler profiles
+  (E) Column IDs: 
+      1. ritz_col: column for ritz wavelengths in the lines array
+      2. lower_col: column for lower level energy in lines array
+      3. upper_col: column for upper level energy in lines array
+      4. aval_col: column for A values in lines array
+  (F) raw_lines: the processed array of line information. Ensure all data is free of extra "" characters and all headers (there may be up to 3) have been removed.
+  (G) raw_levs: the processed array of level information. Ensure all data is free of extra "" characters and all headers (there may be multiple) have been removed. 
 
 ----
                                       To run the model for a different species, do the following:
@@ -45,5 +38,5 @@ To run a different system (say Ni II), download the line lists and energy levels
 4. Download the levels for that system from https://physics.nist.gov/PhysRefData/ASD/levels_form.html
 5. Save as tab-delimited, and repeat the same procedure as the lines. Take care with J values, remove headers, and resave. These files will then be passed into the model code in the "raw_lines" and "raw_levs" variables.
 6. Change the example script over to the relevant filenames for the lines/levels file and change the "species_string" variable to the appropriate species. This variable is not critical for the model, but determines the names of the output files when the synthetic spectra plot and model outputs are saved.
-7. Note that the variables for solar distance and object velocity are defaulted to those of comet Hyakutake on a given day (1.02 AU, 36.5 km/s TOWARD the sun). If interested in simply testing the model, set solar_dist to 1 AU (in meters) and obj_vel = 0.
+7. Adjust other variables according and run the entire script.
 
