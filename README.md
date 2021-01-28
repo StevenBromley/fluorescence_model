@@ -5,9 +5,9 @@ Several problems in previous versions were located and corrected:
 
 -A single solar spectrum is now provided to give the user the 'best of both worlds'; it now uses measured solar spectra, and computed high-resolution spectra elsewhere
 
--Added in handling of line profiles during flux integration; currently, only the 'Doppler' profile is available. For nearly all cases, the natural linewidth is insignificant, and the gaussian broadening dominates. Voigt and Lorentzian profiles will be added in a future release.
+-Added in handling of line profiles during flux integration; currently, only the 'Doppler' profile is available and is set as the default. For nearly all cases, the natural linewidth is insignificant, and the gaussian broadening dominates. Voigt and Lorentzian profiles will be added in a future release.
 
--Implemented new search algorithm when generating integrating fluxes; compute time down by factor of ~40. (now ~5s instead of ~3min). 
+-Implemented new search algorithm when generating integrated fluxes; compute time down by factor of ~40. (now ~5s instead of ~3min). 
 ----
                                       Running the model
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.7 km/s w.r.t. the sun
