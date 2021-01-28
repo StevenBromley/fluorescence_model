@@ -17,37 +17,37 @@ To run the model, do the following:
 
 2. The code requires a solar spectrum with the following format: Col0 (wavelength; nm), Col1(flux; W / m^2 / nm). The provided file "kurucz_150nm-81um.txt" provides fluxes in the range 150nm out to 81 um from the following:
 
-  a. Kurucz high-resolution *computed* spectra from 150 - 300nm, 
+       a. Kurucz high-resolution *computed* spectra from 150 - 300nm, 
   
-  b. Kurucz high-resolution *measured* spectra from a FTS spanning 300 - 1000nm;
+       b. Kurucz high-resolution *measured* spectra from a FTS spanning 300 - 1000nm;
   
-  c. Kurucz high-resolution *computed* spectra from 1 um - 81 um. 
+       c. Kurucz high-resolution *computed* spectra from 1 um - 81 um. 
   
-  d. For wavelengths outside these bounds, a blackbody is used to estimate the flux. 
+       d. For wavelengths outside these bounds, a blackbody is used to estimate the flux. 
   
 3. Set the parameters for the model. The important parameters are described below:
 
-  (A) solar_dist: heliocentric distance of the emitter; end result must be in meters
+    (A) solar_dist: heliocentric distance of the emitter; end result must be in meters
   
-  (B) obj_velocity: heliocentric velocity (defined positive away from sun). Must be in m/s
+    (B) obj_velocity: heliocentric velocity (defined positive away from sun). Must be in m/s
+    
+    (C) m_species: mass of the emitting species in kg; used for doppler broadening profiles
   
-  (C) m_species: mass of the emitting species in kg; used for doppler broadening profiles
+    (D) t_comet: temperature of the emitting species in Kelvin; used for doppler profiles
   
-  (D) t_comet: temperature of the emitting species in Kelvin; used for doppler profiles
+   (E) Column IDs: 
   
-  (E) Column IDs: 
-  
-      1. ritz_col: column for ritz wavelengths in the lines array
+         1. ritz_col: column for ritz wavelengths in the lines array
       
-      2. lower_col: column for lower level energy in lines array
+         2. lower_col: column for lower level energy in lines array
       
-      3. upper_col: column for upper level energy in lines array
+         3. upper_col: column for upper level energy in lines array
       
-      4. aval_col: column for A values in lines array
+         4. aval_col: column for A values in lines array
       
-  (F) raw_lines: the processed array of line information. Ensure all data is free of extra "" characters and all headers (there may be up to 3) have been removed.
+     (F) raw_lines: the processed array of line information. Ensure all data is free of extra "" characters and all headers (there may be up to 3) have been removed.
   
-  (G) raw_levs: the processed array of level information. Ensure all data is free of extra "" characters and all headers (there may be multiple) have been removed. 
+    (G) raw_levs: the processed array of level information. Ensure all data is free of extra "" characters and all headers (there may be multiple) have been removed. 
   
 
 ----
