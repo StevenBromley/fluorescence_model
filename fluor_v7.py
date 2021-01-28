@@ -331,19 +331,18 @@ def fluorescence_spectra(fluxes,raw_lines,raw_levs,ritz_col,lower_col,upper_col,
     #Calculate Eigenvectors of A^T * A, and use the eigenvector corresponding to the smallest eigenvalue:
     #This is equivalent to using scipy or numpy singular value decomposition (SVD) methods:
     eigenvalues, eigenvectors = np.linalg.eig(np.dot(np.transpose(lhs),lhs))
-    #
-    # Following code added on 01-13-2021
-    # When using the 
-    #
     pops = eigenvectors[:, np.argmin(eigenvalues)]
-    if (pops[0] < 0):
-        #Since any scalar multiple of an eigenvector is also an eigenvector, we force pops positive by default.
-        pops = pops * (-1)
-    #Confirm that populations are all positive. If not, you have a big problem:
+    #We check if the populations are negative; it could be the case that all pops are negative, which is not a problem
+    #as a scaler multiple (e.g. -1) of an eigenvector is still an eigenvector. Check if we are negative:
     for i in range(0,len(pops[:])):
         if (pops[i] < 0):
+            pops = -1 * pops    
+            break
+    #If any population is still negative, we have a problem. Check:
+    for i in range(0,len(pops[:])):
+        if (pops[i] < 0):       
             print('!!! WARNING !!! Negative population for level {:}'.format(i))
-            print('Possible cause: bad atomic data, or bad blackbody approximation. Consider setting supp=False in function call!')
+            print('Possible cause: Atomic Data not complete enough to determine solution. Trim troublesome lines from model and re-run')
     solution_end = time.time()
     print('Matrix solution Completed in {:} seconds'.format(solution_end - pop_end))   
     """
