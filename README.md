@@ -1,7 +1,9 @@
 # fluorescence_model
 
-The newest version of the model code is contained in "fluor_v7.py"
+The newest version of the model code is contained in "fluor_v8.py"
 Several problems in previous versions were located and corrected:
+
+- (New in v8): Fixed an issue with distance scaling, and corrected expression for stimulated emission coefficient.
 
 -A single solar spectrum is now provided to give the user the 'best of both worlds'; it now uses measured solar spectra, and computed high-resolution spectra elsewhere
 
