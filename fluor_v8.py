@@ -338,7 +338,13 @@ def fluorescence_spectra(fluxes,raw_lines,raw_levs,ritz_col,lower_col,upper_col,
     #We check if the populations are negative; it could be the case that all pops are negative, which is not a problem
     #as a scaler multiple (e.g. -1) of an eigenvector.
     #What we really want is the smallest eigenvector where ALL values are positive or ALL are negative:
+    #To ensure we don't select the eigenvalue '0' (the trivial solution), I'll just set all 0 eigenvalues to a very large #.
+    for i in range(0,len(eigenvalues)):
+        if (eigenvalues[i] == 0):
+            eigenvalues[i] = 1e50
     pops = eigenvectors[:, np.argmin(eigenvalues)]
+    eig_vec_choice = find_nearest_index(eigenvalues, np.argmin(eigenvalues))
+    print('Usng Eigenvector belonging to eigenvalue # {:}'.format(eig_vec_choice))
     for i in range(0,len(pops[:])):
         if (pops[i] < 0):
             pops = -1 * pops    
