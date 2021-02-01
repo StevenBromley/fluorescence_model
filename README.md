@@ -3,6 +3,8 @@
 The newest version of the model code is contained in "fluor_v8.py"
 Several problems in previous versions were located and corrected:
 
+-(02-02-2021): Fixed issue with accidental selection of trivial selection after matrix solving. 0 values are now avoided, and eigenvalues/vectors are also returned from the fluorescence_spectra function. Future releases will change the intensity calculation to a separate function to enable user testing of different eigenvectors and their effect on output spectra.
+
 - (New in v8): Fixed an issue with distance scaling, and corrected expression for stimulated emission coefficient.
 
 -A single solar spectrum is now provided to give the user the 'best of both worlds'; it now uses measured solar spectra, and computed high-resolution spectra elsewhere
