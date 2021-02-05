@@ -1,18 +1,11 @@
 # fluorescence_model
 
-The newest version of the model code is contained in "fluor_v8.py"
-Several problems in previous versions were located and corrected:
+As of 02-05-2021, the newest version of the model code is contained in "fluor_v9.py"
+-- Corrected normalization of line profiles. Some large differences for select lines between models (major effect on lines). 
+-- Changed matrix solution to enforce particle conservation (minor effect on lines).
 
--(02-02-2021): Fixed issue with accidental selection of trivial solution after matrix solving. 0 values are now avoided, and eigenvalues/vectors are also returned from the fluorescence_spectra function. Future releases will change the intensity calculation to a separate function to enable user testing of different eigenvectors and their effect on output spectra.
 
-- (New in v8): Fixed an issue with distance scaling, and corrected expression for stimulated emission coefficient.
 
--A single solar spectrum is now provided to give the user the 'best of both worlds'; it now uses measured solar spectra, and computed high-resolution spectra elsewhere
-
--Added in handling of line profiles during flux integration; currently, only the 'Doppler' profile is available and is set as the default. For nearly all cases, the natural linewidth is insignificant, and the gaussian broadening dominates. Voigt and Lorentzian profiles will be added in a future release.
-
--Implemented new search algorithm when generating integrated fluxes; compute time down by factor of ~40. (now ~5s instead of ~3min). 
-----
                                       Running the model
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.7 km/s w.r.t. the sun
 To run the model, do the following:
@@ -58,17 +51,9 @@ To run the model, do the following:
                                       To run the model for a different species, do the following:
 To run a different system (say Ni II), download the line lists and energy levels from NIST:
 
-1. Query https://physics.nist.gov/PhysRefData/ASD/lines_form.html for lines of e.g. "Ni II", and under "Advanced Options" ask for only lines with transition probabilities. Get the data in tab-delimited form. Save as a .txt.
+1. Query https://physics.nist.gov/PhysRefData/ASD/lines_form.html for lines of e.g. "Ni II", and under "Advanced Options" ask for only lines with transition probabilities. Get the data in tab-delimited form and save both lines and levels as .txt.
 
-2. Open the .txt file in excel. Note that if the J values are half-integers, excel defaults to reading them as dates. You want to set those columns to "text". Double-check that excel has opened them correctly. By opening this file in excel, excess "" characters are removed automatically.
+2. Open the .txt files in excel. Note that if the J values are half-integers, excel defaults to reading them as dates. You want to set those columns to "text". Double-check that excel has opened them correctly. By opening this file in excel, excess "" characters are removed automatically. Remove all headers (Lines files will have up to 3; levels may have multiple depending on if autoionizing levels are listed). Save with your desired file names, and load it into the array "raw_lines" and "raw_levs" (see example script for proper genfromtxt options).
 
-3. Remove all headers; depending on the species, there may be multiple: (1) at top of page for vacuum wavelengths, (1) at the beginning of air wavelengths, and (1) around 2000nm to indicate the switch to vacuum wavelengths for IR transitions. Remove these headers if present.
-
-4. Download the levels for that system from https://physics.nist.gov/PhysRefData/ASD/levels_form.html
-
-5. Save as tab-delimited, and repeat the same procedure as the lines. Take care with J values, remove headers, and resave. These files will then be passed into the model code in the "raw_lines" and "raw_levs" variables.
-
-6. Change the example script over to the relevant filenames for the lines/levels file and change the "species_string" variable to the appropriate species. This variable is not critical for the model, but determines the names of the output files when the synthetic spectra plot and model outputs are saved.
-
-7. Adjust other variables according and run the entire script.
+3. Adjust variables (temps, mass, etc) accordingly and run. An approximate runtime is ~1s per 100 transitions for the most time consuming portion (calculating integrated fluxes). If iterating to generate Monte-Carlo style errors, the model iterations are negligible as the fluxes only need to be calculated once.
 
