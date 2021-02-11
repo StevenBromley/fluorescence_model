@@ -302,7 +302,12 @@ def fluorescence_spectra(fluxes,raw_lines,raw_levs,ritz_col,lower_col,upper_col,
     for i in range(0,len(lhs[0,:])):
         lhs[0,i] = 1
     #SOLVE Ax=b via x = A^-1 * B
-    a_inverse = np.linalg.inv(lhs)
+    try:
+        a_inverse = np.linalg.inv(lhs)
+    #In *some* unique cases, the matrix can be singular. We fix this by calculating the pseudo-inverse:
+    except:
+        print('!!! WARNING !!! Singular Matrix Detected. Calculating *approximate* solution using Moore-Penrose psuedo-inverse...')
+        a_inverse = np.linalg.pinv(lhs)
     pops = np.dot(a_inverse,rhs)    
     solution_end = time.time()
     print('Matrix solution Completed in {:} seconds'.format(round(solution_end - pop_end,4)))
