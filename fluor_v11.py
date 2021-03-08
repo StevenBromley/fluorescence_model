@@ -210,8 +210,8 @@ def error_process(errdat):
     import numpy as np
     #Pre-allocate the array size; quicker than using np.append to add new rows every time:
     err_out = np.zeros((len(errdat[:,0]),6)) 
-    err_out[:,0] = errdat[:,0] #Vav wave
-    err_out[:,1] = errdat[:,1] #Air Wave 
+    err_out[:,0] = errdat[:,0] #Air wave
+    err_out[:,1] = errdat[:,1] #Vac Wave 
     err_out[:,2] = errdat[:,2] #Intensity
     for i in range(0,len(errdat[:,0])):
         max_val = np.amax(errdat[i,3:])
