@@ -1,9 +1,15 @@
 # fluorescence_model
 
 As of 03-08-2021, the newest version of the model code is contained in "fluor_v11.py"
-  -v10 was problematic
-  -Fixed singular matrix error caused by question mark in NIST levels file.
-  -Added scripts/functions for calculating errorbars if desired (NOTE: If using a large number of iterations, you may want to forgo     calculating the standard deviations etc, and write a separate script to do so if your machine doesn't have enough RAM). 
+  
+  -Compared to previous versions, the code is now highly functionalized and set up for future additions for systems w/ bad or missing atomic data. During the problem solving of  some bugs encountered with Fe I, a few things were explored to identify and iteratively trim bad atomic data, but that functionalize is (for now) disabled. 
+
+  -v10 was problematic and is now eliminated
+  
+  -Fixed singular matrix error caused by question mark in NIST levels file. 
+  
+  
+  -Added scripts/functions for calculating errorbars if desired (NOTE: If using a large number of iterations, you may want to forgo calculating the standard deviations etc, and write a separate script to do so if your machine doesn't have enough RAM). 
 
 
                                       Running the model
