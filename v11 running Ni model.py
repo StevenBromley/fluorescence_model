@@ -6,7 +6,7 @@ SJB
 This uses version 11 of the model
 """
 from fluor_v11 import *
-import matplotlib.pyplot asplt
+import matplotlib.pyplot as plt
 #
 cwd = os.getcwd()
 raw_lines = np.genfromtxt('ni0_lines_processed.txt',delimiter='\t',dtype=str,skip_header=0)
