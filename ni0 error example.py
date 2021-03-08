@@ -7,7 +7,6 @@ from fluor_v11 import *
 
 #%%
 cwd = os.getcwd()
-one_run_start = time.time()
 raw_lines = np.genfromtxt('ni0_lines_processed.txt',delimiter='\t',dtype=str,skip_header=0)
 raw_levs = np.genfromtxt('ni0_levs_processed.txt',delimiter ='\t',skip_header=0,usecols=(0,1,2,3),dtype=str)
 #%%
@@ -25,6 +24,7 @@ t_comet = 100 # Kelvin; temperature used for doppler profile.
 kurucz_flux = np.genfromtxt('kurucz_150nm-81um.txt',delimiter ='\t',dtype=float,skip_header=1) 
 #Calculate the integrated fluxes; this takes into account a doppler-broadedning line profile at temp t_comet by default
 fluxes = fluxes_with_profiles(kurucz_flux,raw_lines,raw_levs,lower_col,upper_col,aval_col,obj_vel,solar_dist,t_comet, m_species)
+one_run_start = time.time()
 model = fluorescence_spectra(fluxes,raw_lines,raw_levs,ritz_col,lower_col,upper_col,aval_col, renorm =False)  
 model_lines = model[1]
 one_run_end = time.time()
