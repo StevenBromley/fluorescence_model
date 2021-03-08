@@ -2,15 +2,12 @@
 """
 Running Fluorescence Model for Ni I
 SJB
-02-05-2021
-This uses version 7 of the model
+03-08-2021
+This uses version 11 of the model
 """
-from fluor_v9 import *
-"""
-fluor_v9 contains a number of dependencies and other useful packages:
-    numpy (np), matplotlib.pyplot (plt), os, math
-    Numerical integratin is handled internally using a simple rectangle code I have written. 
-"""
+from fluor_v11 import *
+import matplotlib.pyplot asplt
+#
 cwd = os.getcwd()
 raw_lines = np.genfromtxt('ni0_lines_processed.txt',delimiter='\t',dtype=str,skip_header=0)
 raw_levs = np.genfromtxt('ni0_levs_processed.txt',delimiter ='\t',skip_header=0,usecols=(0,1,2,3),dtype=str)
@@ -40,4 +37,4 @@ plt.grid()
 plt.ylabel("Intensity (arb. units)")
 plt.xlim(200,600)
 
-np.savetxt('v9_ni0_synthetic.txt',lines,delimiter ='\t')
+np.savetxt('v11_ni0_synthetic.txt',lines,delimiter ='\t')
