@@ -43,7 +43,6 @@ np.savetxt('ni0_{:}iterations_stats.txt'.format(num_samples),err_processed,delim
 plt.clf()
 plt.figure(figsize=(10,8))
 plt.rcParams.update({'font.size': 22})
-#plt.stem(err_processed[:,0], err_processed[:,2], yerr=err_processed[:,-1], label = 'Ni spectra with errorbars')
 plt.errorbar(err_processed[:,0],err_processed[:,2],yerr=err_processed[:,-1],fmt='o',ecolor='red',capsize=4, elinewidth=2)
 plt.stem(err_processed[:,0],err_processed[:,2], label = 'Ni I synthetic spectra')
 plt.grid(True)
