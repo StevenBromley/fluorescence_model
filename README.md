@@ -1,5 +1,8 @@
 # fluorescence_model
 
+UPDATE 05-24-2021:
+-- Significant issues found in v11. I will be uploading v12 by end of week with fixes.
+
 As of 03-08-2021, the newest version of the model code is contained in "fluor_v11.py"
   
   -Compared to previous versions, the code is now highly functionalized and set up for future additions for systems w/ bad or missing atomic data. During the problem solving of  some bugs encountered with Fe I, a few things were explored to identify and iteratively trim bad atomic data, but that functionalize is (for now) disabled. 
