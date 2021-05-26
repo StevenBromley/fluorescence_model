@@ -1,19 +1,11 @@
 # fluorescence_model
 
-UPDATE 05-24-2021:
--- Significant issues found in v11. I will be uploading v12 by end of week with fixes.
-
-As of 03-08-2021, the newest version of the model code is contained in "fluor_v11.py"
-  
-  -Compared to previous versions, the code is now highly functionalized and set up for future additions for systems w/ bad or missing atomic data. During the problem solving of  some bugs encountered with Fe I, a few things were explored to identify and iteratively trim bad atomic data, but that functionalize is (for now) disabled. 
-
-  -v10 was problematic and is now eliminated
-  
-  -Fixed singular matrix error caused by question mark in NIST levels file. 
-  
-  
-  -Added scripts/functions for calculating errorbars if desired (NOTE: If using a large number of iterations, you may want to forgo calculating the standard deviations etc, and write a separate script to do so if your machine doesn't have enough RAM). 
-
+UPDATED 05-26-2021:
+-- Newest (and recommended) version if fluor_v13_2. Note that the variables for comet temperature and particle mass have been removed; adjust function calls accordingly if re-using old scripts.
+-- Fixed minor issues in Doppler shift function
+-- Removed line profiles from flux calculation; unnecessary for this application (coincidentally significantly improves speed of calculation)
+-- Corrected unit issues in Einstein B Coefficients and radiation field handling.
+-- Planning on writing a users guide soon
 
                                       Running the model
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.7 km/s w.r.t. the sun
