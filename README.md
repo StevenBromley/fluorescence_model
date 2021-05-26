@@ -1,10 +1,14 @@
 # fluorescence_model
 
 UPDATED 05-26-2021:
--- Newest (and recommended) version if fluor_v13_2. Note that the variables for comet temperature and particle mass have been removed; adjust function calls accordingly if re-using old scripts.
+-- Newest (and recommended) version is fluor_v13_2. Note that the variables for comet temperature and particle mass have been removed; adjust function calls accordingly if re-using old scripts.
+
 -- Fixed minor issues in Doppler shift function
+
 -- Removed line profiles from flux calculation; unnecessary for this application (coincidentally significantly improves speed of calculation)
+
 -- Corrected unit issues in Einstein B Coefficients and radiation field handling.
+
 -- Planning on writing a users guide soon
 
                                       Running the model
