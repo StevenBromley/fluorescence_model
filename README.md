@@ -25,13 +25,9 @@ To run the model, do the following:
 
     (A) solar_dist: heliocentric distance of the emitter; end result must be in meters
   
-    (B) obj_velocity: heliocentric velocity (defined positive away from sun). Must be in m/s
-    
-    (C) m_species: mass of the emitting species in kg; used for doppler broadening profiles
-  
-    (D) t_comet: temperature of the emitting species in Kelvin; used for doppler profiles
-  
-   (E) Column IDs: 
+    (B) obj_velocity: heliocentric velocity (defined positive away from sun). Must be in m/s.
+
+    (C) Column IDs: 
   
          1. ritz_col: column for ritz wavelengths in the lines array
       
@@ -41,9 +37,9 @@ To run the model, do the following:
       
          4. aval_col: column for A values in lines array
       
-     (F) raw_lines: the processed array of line information. Ensure all data is free of extra "" characters and all headers (there may be up to 3) have been removed.
+     (D) raw_lines: the processed array of line information. Ensure all data is free of extra "" characters and all headers (there may be up to 3) have been removed.
   
-    (G) raw_levs: the processed array of level information. Ensure all data is free of extra "" characters and all headers (there may be multiple) have been removed. 
+    (E) raw_levs: the processed array of level information. Ensure all data is free of extra "" characters and all headers (there may be multiple) have been removed. 
   
 
 ----
