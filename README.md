@@ -1,9 +1,10 @@
 # fluorescence_model
 
-UPDATED 05-26-2021:
--- Newest (and recommended) version is fluor_v13_2. Note that the variables for comet temperature and particle mass have been removed; adjust function calls accordingly if re-using old scripts.
+README Updated 06-04-2021
+-- Newest (and recommended) version is fluor_v13_3.
 
--- I am working on preparing a more in-depth users guide. However, the "fluorescence_model" pdf above provides a description of the theory and the software implementation.
+Updates:
+-- Broke handling of radiation field into 3 parts to improve handling of vacuum / air wavelengths. Solar spectra now come in 3 parts: vaccum uv 150 - 200 nm, "visible" 200 - 1000 nm, and vacuum infrared 1 - 81 microns. 
 
                                       Running the model
 The test script for Ni will generate synthetic spectra at 1.02 AU for a comet traveling at -36.7 km/s w.r.t. the sun
@@ -11,13 +12,12 @@ To run the model, do the following:
 
 1. Download all files in this github repository,
 
-2. The code requires a solar spectrum with the following format: Col0 (wavelength; nm), Col1(flux; W / m^2 / nm). The provided file "kurucz_150nm-81um.txt" provides fluxes in the range 150nm out to 81 um from the following:
+2. The code requires a solar spectra(um) with the following format: Col0 (wavelength; nm), Col1(flux; W / m^2 / nm). The provided files "kurucz_xxx.txt" provide fluxes in the range 150nm out to 81 um from the following:
 
-       a. Kurucz high-resolution *computed* spectra from 150 - 300nm, 
+       a. Kurucz high-resolution *computed* spectra from 150 - 199.935 nm (in vacuum wavelengths). *Computed* fluxes, converted to air wavelengths, are used for 199.935 - 299 nm.
+       b. Kurucz high-resolution measured spectra for used for 299 - 1001.27 nm.
   
-       b. Kurucz high-resolution *measured* spectra from a FTS spanning 300 - 1000nm;
-  
-       c. Kurucz high-resolution *computed* spectra from 1 um - 81 um. 
+       c. Kurucz high-resolution *computed* spectra from 1001.27 nm - 81 um. 
   
        d. For wavelengths outside these bounds, a blackbody is used to estimate the flux. 
   
@@ -50,5 +50,4 @@ To run a different system (say Ni II), download the line lists and energy levels
 
 2. Open the .txt files in excel. Note that if the J values are half-integers, excel defaults to reading them as dates. You want to set those columns to "text". Double-check that excel has opened them correctly. By opening this file in excel, excess "" characters are removed automatically. Remove all headers (Lines files will have up to 3; levels may have multiple depending on if autoionizing levels are listed). Save with your desired file names, and load it into the array "raw_lines" and "raw_levs" (see example script for proper genfromtxt options).
 
-3. Adjust variables (temps, mass, etc) accordingly and run. An approximate runtime is ~1s per 100 transitions for the most time consuming portion (calculating integrated fluxes). If iterating to generate Monte-Carlo style errors, the model iterations are negligible as the fluxes only need to be calculated once.
-
+3. Adjust variables (column variables) accordingly and run.
