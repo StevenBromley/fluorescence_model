@@ -2,7 +2,7 @@
 """
 Fluorescence Model using NIST data
 SJB
-Released tentatively on 01-04-2021
+Released tentatively on 06-07-2021
 ------------------------
 """
 import numpy as np #The OG
@@ -60,23 +60,6 @@ def find_nearest_index(array,value):
         if (diff < diff_temp):
             index = i
             diff_temp = diff
-    return index
-
-def find_nearest_index_mod(array,value):
-    #This is a modified version of find_nearest_index that cuts off searching through entire array once value is found
-    #Requires that input array is sorted in increasing order.
-    #In theory, this could be sped up by saving the index and passing that to the iteration for the next line
-    #So that early values aren't re-searched. May implement in future if speed is concern:
-    for i in range(0,len(array[:])):
-        diff = array[i] - value
-        if (diff > 0):
-            lower_val = array[i-1]
-            if (abs(lower_val) < abs(diff)):
-                index = i-1
-                break
-            else:
-                index = i
-                break
     return index
 
 def vac_to_air(wavelength_vac):
@@ -290,71 +273,11 @@ def fluorescence_spectra(fluxes,raw_lines,raw_levs,ritz_col,lower_col,upper_col,
     if (solution_flag == 0):
         print('Solution is VALID and non-negative!')
         pops = model_solution[1]
-    #If the model has run correctly, none of the below code will execute. However, if it hasn't run correctly, we start to look for bad atomic data and trim it:     
     else:
-        #If we have gotten to this point, I am sorry. Good luck!
-        pops = np.zeros(len(lhs[:,0])) #so the code can actually return info to user, we define an empty 'pops' variable
-        while (solution_flag != 0):
-            """
-                    INTEGRITY CHECKS:
-            """
-            data_check = identify_bad_data(lhs)
-            #Data check looks for problematic columns, i.e. identical, and we  then make them NOT identical.
-            if (len(data_check) == 0):
-                print('Bad Level detection failed. Revisit atomic data. Exiting code.')
-                break
-            bad_levels = np.sort(data_check)
-            bad_level = np.amax(data_check)
-            if ((len(bad_levels) == 1) and (bad_level==0)):
-                print('Ground state found as only "bad" level. Please check atomic data for validity. Exiting code.')
-                break
-            else:
-                if (minor_corr == True): #This is the default; could also do diag / non-diag perturbs.
-                #If we have made it here, we have identified a column(s) that is not the 0th column that are identical.
-                #We will slightly modify these columns w/ a near-zero perturbation to allow a solution to proceed.
-                    print('Option for minor perturbative corrections not yet available. Exiting code.')
-                    break
-                
-            """    
-                if (off_diag == True):
-                    print('Off-diagonal perturbative method not available yet. Exiting code.')
-                    sys.exit(0)
-                if (diag == True):
-                    print('Diagonal perturbative method not available yet. Exiting code.')
-                    sys.exit(0)
-            if ((bad_level == 0) and (len(bad_levels) != 1)): #If true, the ground is incorrectly selected as the 'bad' and only 'bad' level. This was caused by the normalization condition.
-                bad_level = bad_levels[-1] #Take highest level as the 'bad' level    
-            print('(Approximate) Bad Level at original level index {:}. Removing from model.'.format(bad_level))
-            #Save the 'bad' levels ORIGINAL index!
-            #We look in "rel_levs" before we modify it to grab the original level index:
-            for x in range(0,len(rel_levs[:,0])):
-                if (rel_levs[x,2] == bad_level):
-                    original_index = int(rel_levs[x,0]) #Must be int; float messes everything up.
-                    break
-            #Save the original index of the bad level for troubleshooting purposes after code end
-            bad_levels_out = np.append(bad_levels_out, np.array([original_index]),axis=0)
-            new_idx_and_rel_levs = trim_bad_atomic(idx,rel_levs,original_index)
-            idx = new_idx_and_rel_levs[0]
-            rel_levs = new_idx_and_rel_levs[1]
-            #With the new line array and level mapping, we generate + populate the LHS.
-            #Grab the "new_idx" from maximum of rel_levs array col2:
-            #max_lev_idx = int(np.amax(rel_levs[:,2])) + 1 #To account for zero-indexing in python:
-            new_idx = new_idx_and_rel_levs[2]
-            lhs_empty = np.zeros((new_idx,new_idx)) #A * [X] = B; here lhs_empty will become matrix A
-            lhs = populate_lhs(lhs_empty,idx,rel_levs) #Pass in lines, idx array (containing atomic data), and empty array to populate
-            print('Starting Matrix Solution on modified matrix after removing level {:}.'.format(bad_level))
-            rhs = np.zeros((len(lhs[:,0]),1))
-            #Normalize to total pop = 1; enforce in first row:
-            rhs[0] = 1
-            for i in range(0,len(lhs[0,:])):
-                lhs[0,i] = 1
-            model_solution = matrix_solve(lhs,rhs,off_diag)   #Attempt to solve matrix equation
-            solution_flag = model_solution[0]     
-            pops = model_solution[1]
-            if (solution_flag == 0):
-                print('Solution Found!')
-                break
-            """
+        print('Problem with solution (levels with 0 population). Be wary of fluorescence efficiencies.')
+        pops = model_solution[1]
+    #If the model has run correctly, none of the below code will execute. However, if it hasn't run correctly, we start to look for bad atomic data and trim it:     
+    
     #All said and done, we now calculate line intensities:
     line_intensities = calc_line_intensities(pops,idx,rel_levs,geo_vel,renorm)
     #Done.
@@ -366,7 +289,12 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
     This function is used to integrate a radiation field convolved with a line profile for each line provided.
     The output is intended to be fed into the fluorescence_model function
     The inputs are:
-        raw_rad: The 2-col solar spectrum used. Format: col0 wavelength (nm), col1 flux (W / m^2 / nm)
+        rad_uv: 2col solar fluxes; Col0 in VACUUM nm, col1 flux in W / m^2 / nm in vacuum wavelengths.
+        rad_vis: 2col solar fluxes; Col0 in AIR nm, col1 flux in W / m^2 / nm in vacuum wavelengths.
+        rad_ir: 2col solar fluxes; Col0 in VACUUM nm, col1 flux in W / m^2 / nm in vacuum wavelengths.
+        
+        For radiation fields, conversion to W/m^3 is handled internally. 
+        
         raw_lines: lines array imported from a file downloaded for NIST; see documentation.
         raw_levs: levels array imported from a file downloaded for NIST; see documentation.
         lower_col: column index for lower level energy (cm^-1) in lines array
@@ -378,15 +306,9 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
         m_species: mass of emitting species in kg
 
     OPTIONAL inputs:
-        wav_coverage: Defaulted to 0.005; this sets the range over which the radiation field is integrated.
-            It is advised that this is slightly larger than the bulk of the line profile. Also be aware that this
-            is expected to be span many pixels in the flux wavelength grid
+
         supp: defaulted to True; if the wavelength is outside the range of the radiation field "raw_rad", a blackbody
             at 5777K ('temp' default value) is used.
-        num_profile_points: number of grid points to use for the line profiles. If changed, be sure that the # points
-            is sufficient to resolve the structure of the profile. If set too low, the peak of the profile will be too broad
-        profiles: choice of line profile. As of 01-28-2021, only 'Doppler' (i.e. a Doppler-broadened gaussian) is available.
-            Future choices will be 'Lorentzian' or 'Voigt'
     """
     print('Starting Calculation of Integrated Fluxes...')
     start = time.time()
@@ -396,7 +318,6 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
     start_idx_air = 0 #This variable will be used as a 'tracker' of sorts when we search the raw_rad variable for the right x variable.
     start_idx_vac = 0# Variable used as a similar 'tracker' for vacuum
     start_idx_ir = 0# Variable as a tracker for vacuum infrared
-    #This is necessary as "raw_raw" is ~2 million lines (if using the providede Kurucz spectrum), and using this method DRAMATICALLY improves the speed!
     for i in range(0,len(raw_lines[:,0])):     
         #Grab upper/lower energies and vac wavelength
         upper_energy = convert_to_float(raw_lines[i,upper_col])
@@ -444,8 +365,6 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
             #Only matters when 'supp=False' AND radiation field is not available for all relevant wavelengths
             print('!!! WARNING !!! No Radiation field for line {:} nm; all rates for line set to 0! Consider blackbody supplementation'.format(wavelength_vac_nm))
             integrated_fluxes[i] = 0
-            #Updated on 01-27-2021 to account for line profile
-            #Generate the blackbody intensities on the same x grid as the doppler profile:
             dist_scale  = (Rsun/solar_dist)**2
             bb = blackbody_wave(doppler_wave_vac,temp=bbtemp) #Only need that specific wavelength at temp=5777K (default); assumes nm in
             rad_at_wav = dist_scale * bb
@@ -456,46 +375,10 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
     end = time.time()
     print('Calculation of Integrated Fluxes finished. Elapsed Time {:} s'.format(round(end - start,2)))
     return(integrated_fluxes)   
-
-#%%
-def generate_rad_grid(rad, wavelengths):
-    """
-    Updated documentation on 03-03-2021
-    Introduced on 01-27-2021 to transform the radiation values in rad array to those of the fine-grid line profile. 
-    This function takes in a radiation field in 2 col format; col0 wavelength, col1 flux., and a wavelength grid "wavelengths"
-    It is presumed that the grid is MUCH finer for wavelengths compared to rad.
-    This function takes the values in 'grid' and places them on the same grid spacing as "wavelengths" using interpolation.     
-    """   
-    output_arr = np.empty((len(wavelengths),2))
-    output_arr[:,0] = wavelengths
-    lower_radx = 0
-    upper_radx = 0
-    for i in range(0,len(wavelengths[:])):
-        #The # of points in rad is very small, so we'll just brute force the search for the appropriate indices when they need updating:
-        if ((rad[lower_radx,0] > wavelengths[i]) or (rad[upper_radx,0] < wavelengths[i])):
-            for j in range(0,len(rad[:,0])):
-                check1 = find_nearest_index(rad[:,0], wavelengths[i])
-                #really we just need the lower wavelength found, then the upper index is just lower + 1
-                if (rad[check1,0] < wavelengths[i]):
-                    lower_radx = check1
-                    upper_radx = check1 + 1
-                if (rad[check1,0] > wavelengths[i]):
-                    upper_radx = check1
-                    lower_radx = check1 - 1
-        #Interpolate and save the new y value:
-        x_val = wavelengths[i]
-        lower_x = rad[lower_radx,0]
-        upper_x = rad[upper_radx,0]
-        lower_y = rad[lower_radx,1]
-        upper_y = rad[upper_radx,1]
-        slope = (upper_y - lower_y) / (upper_x - lower_x)
-        interp_y = slope*(wavelengths[i] - lower_x) + lower_y
-        output_arr[i,1] = interp_y
-    return(output_arr)
 #%%
 def fniiv(array,value,start_idx):   
     """
-    "Find Nearest Index Iterative Version"
+    " Nearest Index Iterative Version"
     Added on 01-27-2021
     This is essentially a "find nearest index" code in a sorted array,
     where you pass the place you stopped to the next iteration to prevent re-searching parts of the array that are already searched.
@@ -534,77 +417,6 @@ def numerically_integrate_2col(x_arr,y_arr):
         avg = (y_arr[i] + y_arr[i])/2
         integrated = integrated + (avg*diff)
     return(integrated)      
-#%%
-def doppler_dist(wav_line, t_comet, m_species, num_points, wav_coverage=0.005):
-    """
-    02-05-2021: Updated to properly normalize line profile. 
-    This function returns a doppler broadened line profile at temperature "t_comet" (K), mass "m_species" (kg) and wavelength "wav_line" (nm). 
-    This function is called by the "fluxes with profiles" function; it takes in a (doppler-shifted) wavelength and returns a line profile.
-    "wav_coverage" is the range of the profile, e.g +/- wav_coverage in nm units.
-    num_points is the number of points in the wavelength grid returned. 
-    The output is in 2 column format:
-    col0: wavelength, col1: profile (set to 1 at the center wavelength)
-    
-    05-24-2021 Now Defunct; do *not* use. 
-    
-    """
-    c = 2.99792458e8  #SI
-    c_nm = c * 1e9
-    kb = 1.3864852e-23 #SI
-    wavelength_nm = wav_line
-    wavelength_m = wav_line * 1e-9 #convert o m
-    freq_rest = c / wavelength_m #calcute frequency
-    gauss_std = np.sqrt(kb * t_comet / (m_species)) * (freq_rest / c) #standard deviation of Gaussian
-    #The wavelength grid in units of nm
-    x_range = np.linspace(wav_line - wav_coverage, wav_line + wav_coverage, num_points)
-    #convert to FREQUENCY for ease of calculation:
-#    gauss_x = c_nm * (wavelength_nm - x_range) / (wavelength_nm * x_range)
-    gauss_x = c_nm * (wavelength_nm - x_range) / (wavelength_nm)
-    #Calculate HWHM from standard deviation:
-    alpha = gauss_std * np.sqrt(2 * np.log(2))  
-    #Profile:
-    """
-    gauss_std = np.sqrt(kb * temp / (mass)) * (freq_rest / c)
-    x_range = np.linspace(wavelength_nm - 0.005, wavelength_nm + 0.005, 100)
-    gauss_x = c / (x_range - wavelength_nm) * 1e-9      #FREQUENCY SPACE
-    lor_x = c_nm * (wavelength_nm - x_range) / (wavelength_nm * x_range)
-    test_gauss = G(lor_x,gauss_std)       
-    """
-    profile = np.sqrt(np.log(2) / np.pi)/alpha * np.exp(- (gauss_x / alpha)**2 * np.log(2))
-    output = np.empty((num_points,2))
-    #Save the WAVELENGTH grid and line profile in 2 col format:
-    output[:,0] = x_range
-    output[:,1] = profile    
-    #Normalize profile so intregal of profile over all wavelengths = 1 !
-    gauss_norm = numerically_integrate_2col(x_range,profile[:]) #Normalization factor check!
-    output[:,1] = output[:,1] / (gauss_norm)
-    return(output)
-
-def lorenztian_dist():
-    #Code option available in future release.
-    return()
-
-def voigt_dist():
-    #Code option available in future release    
-    return()
-
-#%%
-#Some experimental perturbative functions.    
-
-def diag_perturb(arr,perturb=1e-10):
-    #Added on 03-01-2021
-    #Assumes a square matrix. Adds a perturbation (default 1e-10) to diagonal elements.
-    for r in range(0,len(arr[:,0])):
-        arr[r,r-1] = arr[r,r-1] + perturb
-    return(arr)  
-
-def off_diag_perturb(arr,perturb=1e-10):
-    #Added on 03-02-2021
-    #Assumes a square matrix. Adds a perturbation to OFF diagonal elements!
-    for r in range(1,len(arr[:,0])):
-        arr[r,r] = arr[r,r] + perturb
-    return(arr)  
-      
 #%%
 def zeros_check(arr):
     #Added on 03-02-2021; searches quickly for 0s in the input array. If present, break and return True in the bool.
@@ -667,98 +479,6 @@ def matrix_solve(lhs,rhs,off_diag=False,diag=False):
             if (zeros_check(pops) == False):
                 sol_string = 'Singular Value Decomposition'
                 solve_flag = 0 
-        """
-        perturb_iteration = 0 #Iteration counter for perturbation. 
-        if (diag==True):
-            diagonal_perturb = 1e-6 #starting value of diagonal perturb
-        else:
-            diagonal_perturb = 0
-        #For each iteration, we try a diagonal perturbation and attempt to solve using pseudo-inverse
-        lhs_pert = np.copy(lhs)
-        if (diag == True):
-            max_num_iter = 50
-        else:
-            max_num_iter = 0
-        while (perturb_iteration < max_num_iter):            
-            lhs_pert = diag_perturb(lhs_pert,diagonal_perturb)
-            a_inverse = np.linalg.pinv(lhs_pert)
-            pops = np.dot(a_inverse,rhs)
-            perturb_iteration = perturb_iteration + 1 #Add to iteration variable.
-            #Now we check that the solution was valid.
-            #zeros_check is a function that returns true if ANY value of passed in array is = to 0.
-            if (zeros_check(pops) == False):
-                sol_string = 'Numpy Psuedo-inverse'
-                solution_check = True
-            else: #If zero check is True, pinv solution is no good.
-                #Try an SVD Solution:
-                U,S,V=np.linalg.svd(lhs_pert)
-                a_inverse = np.dot(V.transpose(), np.dot(np.diag(S**-1),U.transpose()))
-                pops = np.dot(a_inverse,rhs)
-                if (zeros_check(pops) == False):
-                    sol_string = 'Singular Value Decomposition'
-                    solution_check = True
-                else:
-                    a_inverse = ip.invert(lhs_pert,rhs,100,1)
-                    #ip.invert returns a tuple; we want the element [1] 
-                    pops = np.dot(a_inverse[1],rhs)
-                    if (zeros_check(pops) == False):
-                        solution_check = True
-                        sol_string = 'Tikhonov Regularization'
-                    else:
-                        diagonal_perturb = diagonal_perturb *1.1          
-            if (solution_check == True):                   
-                iteration_end = time.time()
-                solve_flag = 0
-                print('Matrix solution Completed in {:} seconds after {:} iterations using {:} with a perturbation of \
-                      +{:}'.format(round(iteration_end - solve_start_time),perturb_iteration,sol_string,diagonal_perturb))
-                break
-            if (perturb_iteration == max_num_iter + 1):
-                print('No solution found using iterative *diagonal* perturbation or Tikhonov Regularization. All pops set to zero.')
-        if ((solution_check == False) and (off_diag == True)):
-            print('Exhausted Diagonal Perturbation Options. Attempting minor *off-diagonal* correction.')
-            perturb_iteration = 0 #Iteration counter for perturbation. 
-            diagonal_perturb = 1e-3 #starting value of diagonal perturb
-            #For each iteration, we try an OFF diagonal perturbation and attempt to solve using pseudo-inverse
-            lhs_pert = np.copy(lhs)
-            max_num_iter = 50
-            while (perturb_iteration < max_num_iter):            
-                lhs_pert = off_diag_perturb(lhs_pert,diagonal_perturb)
-                a_inverse = np.linalg.pinv(lhs_pert)
-                pops = np.dot(a_inverse,rhs)
-                perturb_iteration = perturb_iteration + 1 #Add to iteration variable.
-                #Now we check that the solution was valid.
-                #zeros_check is a function that returns true if ANY value of passed in array is = to 0.
-                if (zeros_check(pops) == False):
-                    sol_string = 'Numpy Psuedo-inverse'
-                    solution_check = True
-                else: #If zero check is True, pinv solution is no good.
-                    #Try an SVD Solution:
-                    U,S,V=np.linalg.svd(lhs_pert)
-                    a_inverse = np.dot(V.transpose(), np.dot(np.diag(S**-1),U.transpose()))
-                    pops = np.dot(a_inverse,rhs)
-                    if (zeros_check(pops) == False):
-                        sol_string = 'Singular Value Decomposition'
-                        solution_check = True
-                    else:
-                        a_inverse = ip.invert(lhs_pert,rhs,100,1)
-                        #ip.invert returns a tuple; we want the element [1] 
-                        pops = np.dot(a_inverse[1],rhs)
-                        if (zeros_check(pops) == False):
-                            solution_check = True
-                            sol_string = 'Tikhonov Regularization'
-                        else:
-                            diagonal_perturb = diagonal_perturb *1.1          
-                if (solution_check == True):                   
-                    iteration_end = time.time()
-                    solve_flag = 0
-                    print('Matrix solution Completed in {:} seconds after {:} iterations using {:} with a perturbation of \
-                          +{:}'.format(round(iteration_end - solve_start_time),perturb_iteration,sol_string,diagonal_perturb))
-                    break
-                if (perturb_iteration == max_num_iter + 1):
-                    print('No solution found using iterative off-diagonal perturbation or Tikhonov Regularization. All pops set to zero.')            
-        #EXPERIMENTAL
-        #EXPERIMENTAL
-                """
     return(solve_flag,pops)    
 #%%
 def generate_index_scheme(lines,levs,fluxes,upper_col,lower_col,aval_col,ritz_col):
@@ -804,10 +524,6 @@ def generate_index_scheme(lines,levs,fluxes,upper_col,lower_col,aval_col,ritz_co
         g_i = 2 *float(levs[int(idx[i,0]),2]) + 1 #lower level degeneracy
         g_j = 2 *float(levs[int(idx[i,1]),1]) + 1 #upper level degeneracy
         aval = float(lines[i,aval_col]) #spont. emission rate
-        #Old stim_coeff = aval * np.pi**2 * c**3 / (hbar * omega**3)
-        #New, added 01-29-2021 to switch to wavelength units:
-        #CHANGED ON 05-21-2021!
-#        stim_coeff = (wavelength_vac * 1e-9)**3 * aval * 1/(2 * h * c)
         #
         stim_coeff = (wavelength_vac * 1e-9)**5 * aval * 1/(8 * np.pi * h * c**2)
         #
@@ -867,152 +583,6 @@ def populate_lhs(lhs_empty,idx,rel_levs):
     construct_end = time.time()
     print('Rate Matrices Populated in {:} seconds'.format(round(construct_end - construct_start),3))
     return(lhs_empty)
-#%%
-def identify_bad_data(lhs_arr):    
-    """
-    Added on 03-02-2021 by SJB
-    Codes on 03-02-2021 Brought to you by 8 hours of King Crimson's "21st Century Schizoid Man" on repeat
-    This function is intended to identify potentially 'bad' atomic data based on the number of similarities in the LHS matrix
-    If this code is called, you are in trouble; there is a big problem, and that requires big resources to solve/figure out.
-    
-    This code does not work well.
-    
-    """
-    #Default for output; returns empty if no 'bad' data found.
-    bad_levels = np.empty((0,1))
-    bad_cols = []
-    bad_rows = []
-    # If the previous approaches failed, we need to identify the problem columns/rows. Now things get fun.
-    lhs_rank = np.linalg.matrix_rank(lhs_arr)
-    print('No solution possible. LHS dimension is {:}, rank is {:}. Searching for bad data (Slow)!'.format(len(lhs_arr[:,0]),lhs_rank))
-    #First, let's check if any columns or rows are all similar. Let's do this iteratively, and remove the largest level index first
-    #Since those are most likely to have the least # of lines; we'd prefer not to remove low (e.g. metastable) levels from the 
-    #rate matrix. 
-    #New method added on 03-02-2021:
-    check0 = False
-    #First, we check if any columns are identical using a quick numpy routine:
-    cols_equal = np.empty((0,2))
-    for i in range(0,len(lhs_arr[0,:])):
-        for j in range(i+1,len(lhs_arr[0,:])):
-            if (np.array_equal(lhs_arr[:,i],lhs_arr[:,j]) == True):
-                temp = np.empty((1,2))
-                temp[0,0] = i
-                temp[0,1] = j
-                print('Potential Problem: Columns {:} and {:} identical!'.format(i,j))
-                cols_equal = np.append(cols_equal,temp,axis=0)
-    if (len(cols_equal) > 0): #If True, we have identical columns
-        check0 = True #flag to use the later method using histograms; if True, we ignore that for now.
-        #Flatten the list and grab unique level #'s. These are the 'bad' columns:
-        cols_flat = np.append(cols_equal[:,0], cols_equal[:,1], axis=0)
-        bad_cols = np.unique(cols_flat)
-        bad_levels = np.copy(bad_cols)
-    """
-    rows_equal = np.empty((0,2))
-    for i in range(0,len(lhs_arr[:,0])):
-        for j in range(i+1,len(lhs_arr[:,0])):
-            if (np.array_equal(lhs_arr[i,:],lhs_arr[j,:]) == True):
-                temp = np.empty((1,2))
-                temp[0,0] = i
-                temp[0,1] = j
-                print('Potential Problem: Rows {:} and {:} identical!'.format(i,j))
-                rows_equal = np.append(rows_equal,temp,axis=0)
-    if (len(rows_equal) > 0): #If True, we have identical columns
-        check0 = True #flag to use the later method using histograms; if True, we ignore that for now.
-        #Flatten the list and grab unique level #'s. These are the 'bad' columns:
-        rows_flat = np.append(rows_equal[:,0], rows_equal[:,1], axis=0)
-        bad_rows = np.unique(rows_flat)    
-    
-    bad_levels = np.append(bad_cols,bad_rows)
-    """    
-    if (check0 == False):
-        print('No identical columns found. Attempting to identical *similar* columns...')
-        compare_thresh = 1e2
-        comp_out = np.empty((0,1))
-        #First, we compare  column by column:
-        for i in range(0,len(lhs_arr[0,:])):
-            init_col = lhs_arr[:,i]
-            for j in range(i+1,len(lhs_arr[0,:])):
-                temp = np.empty((1,1))
-                temp2 = np.empty((1,1))
-                comp_col = lhs_arr[:,j]
-                col_diff = init_col - comp_col
-                col_check = 0
-                for k in range(1,len(col_diff[:])):
-                    if (0 < abs(col_diff[k]) < compare_thresh):
-                        col_check = col_check + 1
-                if (col_check > 0):
-                    temp[0,0] = i
-                    temp2[0,0] = j
-                    comp_out = np.append(comp_out,temp,axis=0)
-                    comp_out = np.append(comp_out,temp2,axis=0)
-        #We compare rows:   
-        comp_out = np.empty((0,1))
-        for i in range(0,len(lhs_arr[:,0])):
-            init_row = lhs_arr[i,:]
-            for j in range(i+1,len(lhs_arr[:,0])):
-                temp = np.empty((1,1))
-                temp2 = np.empty((1,1))
-                comp_row = lhs_arr[j,:]
-                row_diff = init_row - comp_row
-                row_check = 0
-                for k in range(1,len(row_diff[:])):
-                    if (0 < abs(row_diff[k]) < compare_thresh):
-                        row_check = row_check + 1
-                if (row_check > 0):
-                    temp[0,0] = i
-                    temp2[0,0] = j
-                    comp_out = np.append(comp_out,temp,axis=0)
-                    comp_out = np.append(comp_out,temp2,axis=0)               
-                    
-        #The col_comp_out array contains the indices of levels that give us trouble.
-        #We'll search for the largest numbers of occurences, and return those for later processing.
-        hist_occur = (np.histogram(comp_out,bins=len(lhs_arr[:,0])))[0]
-        #This calculates a histogram of the occurences of the level indices that had columns within the "compare_thresh"
-        hist_occur_copy = np.copy(hist_occur)
-        #bad_levels = np.sort(hist_occur_copy)
-        
-        max_of_hist = np.amax(hist_occur)
-        #We search within +/- 10% of the maximum to be safe:
-        hist_search_min = max_of_hist*.5
-        hist_search_max = max_of_hist*1.1
-        for i in range(0,len(hist_occur[:])):
-             if (hist_search_min < hist_occur[i] < hist_search_max):
-                 temp = np.empty((1,1))
-                 temp[0,0] = i
-                 bad_levels = np.append(bad_levels,temp,axis=0)
-    return(bad_levels)
-#%%
-def trim_bad_atomic(idx_arr,rel_levs,bad_level_original_index):
-    """
-    03-02-2021
-    Added by SJB
-    This function is specialized, and used internally by the model function to remove 'bad' atomic data. This function does NOT 'find' bad atomic data,
-    it only contains the functionality to remove select levels from the model. In the future, I may code this up so that the user can selectively remove levels
-    if they wish.
-    
-    This code would handle the 'removal' from the model.
-    """
-    new_idx_arr = np.copy(idx_arr)
-    new_rel_levs = np.copy(rel_levs)
-    #Since we are going from len(arr) to >= 0, we subtract 1 to correct for 0 indexing:
-    i = len(new_idx_arr[:,0]) - 1
-    while (i >= 0):
-        if ((new_idx_arr[i,0] == bad_level_original_index) or (new_idx_arr[i,1] == bad_level_original_index)):
-            #If true, the bad level is involved in emission line 'i'. We remove it:
-            new_idx_arr = np.delete(new_idx_arr, i, axis=0)
-        i = i - 1
-    #With that done, we turn our attention to the 'rel_levs' array. 
-    #First, we identify where the 'bad level' is located. Thankfully, the rel_levs array spans the entirety of the original levels file.
-    #In rel_levs, the columns are: col0 (original index), col1 (=1 if present in model), col2 = new index:
-    #We essentially just set the col1 of the bad level to 0, and re-generate the new index scheme:
-    #Note, we are assuming the BAD level is indexed according to the ORIGINAL indexing scheme, i.e. row # = bad level # in original index scheme
-    new_rel_levs[bad_level_original_index,1] = 0
-    new_idx = 0
-    for i in range(0,len(new_rel_levs[:,0])):
-        if (new_rel_levs[i,1] == 1):
-            new_rel_levs[i,2] = new_idx
-            new_idx = new_idx + 1
-    return(new_idx_arr,new_rel_levs,new_idx)
 #%%
 def calc_line_intensities(pops,idx,rel_levs,geo_vel,renorm):
     """
