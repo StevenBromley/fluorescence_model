@@ -370,7 +370,7 @@ def fluxes_with_profiles(raw_rad_vac,raw_rad_air,raw_rad_ir,raw_lines,raw_levs,l
             rad_at_wav = dist_scale * bb
             integrated_fluxes[i] = rad_at_wav
             print('Supplemental Blackbody invoked for line at {:} nm'.format(wavelength_vac_nm))
-        if ((supp == True) and ((doppler_wave_vac < raw_rad_vac[0,0])  or (doppler_wave_vac > raw_rad_ir[-1,0]))):
+        if ((supp == False) and ((doppler_wave_vac < raw_rad_vac[0,0])  or (doppler_wave_vac > raw_rad_ir[-1,0]))):
             integrated_fluxes[i] = 0
     end = time.time()
     print('Calculation of Integrated Fluxes finished. Elapsed Time {:} s'.format(round(end - start,2)))
