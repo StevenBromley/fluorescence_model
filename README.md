@@ -13,10 +13,18 @@ The syntax for performing Monte-Carlo iterations to generate approximate model u
 are required for good convergence.
 
 The solar spectrum assumed in the model is provided as a compressed file (uncompressed it is ~200mb). The default "0-2730_vac.txt" file, contains the following:
+
+
 0 - 168 nm: The UV coronol/chromosphere model of Fontenla et al (2014) [1]. This spectrum shows good agreement with measurements of the quiet sun spectrum from the SORCE mission.
+
+
 168 - 200.06 nm: SOLSTICE quiet-sun measurements with 0.1 nm resolution
+
+
 200.06 - 202 nm: Hall and Anderson (1991) UV measurements [2]
- 202 - 2730 nm: Composite high-resolution benchmarked solar spectrum from Coddington et al (2021). Their dataset is compiled
+
+
+202 - 2730 nm: Composite high-resolution benchmarked solar spectrum from Coddington et al (2021). Their dataset is compiled
           from various space- and ground-based measurements of the solar spectrum, including the famous measurements of Kurucz.
           
 The code is currently capable of assuming two line profiles when computing absorption/stimulated emission rates: a delta function, and a doppler (thermal) profile.
