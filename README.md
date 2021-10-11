@@ -1,4 +1,4 @@
-The code contained in this dictionary is the same version used in Bromley et al 2021 in PSJ (see also arxiv): "Atomic iron and nickel in the coma of C/1996 B2 (Hyakutake): production rates, emissionmechanisms, and possible parents"
+The code contained in this repo is the same version used in Bromley et al 2021 in PSJ (see also arxiv): "Atomic iron and nickel in the coma of C/1996 B2 (Hyakutake): production rates, emissionmechanisms, and possible parents"
 The theoretical background is described in Bromley et al 2021, and the code is distributed under a GNU GPL license. If you intend to modify this code, please
 contact me with any questions.
 
