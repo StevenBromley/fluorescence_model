@@ -24,7 +24,7 @@ The solar spectrum assumed in the model is provided as a compressed file (uncomp
 200.06 - 202 nm: Hall and Anderson (1991) UV measurements [2]
 
 
-202 - 2730 nm: Composite high-resolution benchmarked solar spectrum from Coddington et al (2021). Their dataset is compiled
+202 - 2730 nm: Composite high-resolution benchmarked solar spectrum from Coddington et al (2021) [3]. Their dataset is compiled
           from various space- and ground-based measurements of the solar spectrum, including the famous measurements of Kurucz.
           
 The code is currently capable of assuming two line profiles when computing absorption/stimulated emission rates: a delta function, and a doppler (thermal) profile.
@@ -32,3 +32,14 @@ The code is currently capable of assuming two line profiles when computing absor
 A detailed User Guide is in the works, as well as improved functionality to use approximate data for e.g. collisional quenching. 
 
 Be advised that the code DOES NOT check that all lines are connected to ground; that is up to the user. As a short-term workaround, it is recommended to set the "upper_cutoff" variable to the ionization potential value in cm^-1 so that auto-ionizing levels are not included. Auto-ionizing level data is typically lacking, and will not have a direct or indirect radiative pathway to ground, leading to failures in the matrix solver. 
+
+
+
+-------
+[1] Fontenla, J. M., Landi, E., Snow, M., & Woods, T. 2014, Solar Physics, 289, 515, doi: 10.1007/s11207-013-0431-4
+
+[2] Hall, L. A., & Anderson, G. P. 1991, Journal of Geophysical Research: Atmospheres, 96, 12927, doi: https://doi.org/10.1029/91JD01111
+
+[3] Coddington, O. M., Richard, E. C., Harber, D., et al. 2021, Geophysical Research Letters, 48, e2020GL091709, doi: https://doi.org/10.1029/2020GL091709
+
+
