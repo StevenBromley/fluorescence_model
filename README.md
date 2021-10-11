@@ -1,6 +1,8 @@
-The code contained in this repo is the same version used in Bromley et al 2021 in PSJ (see also arxiv): "Atomic iron and nickel in the coma of C/1996 B2 (Hyakutake): production rates, emissionmechanisms, and possible parents". A theoretical description is available in Bromley et al 2021. 
+The code contained in this repo is the same version used in Bromley et al 2021 in PSJ (see also arxiv): "Atomic iron and nickel in the coma of C/1996 B2 (Hyakutake): production rates, emission mechanisms, and possible parents". The theoretical description is available in Bromley et al 2021, but an updated User Guide with theoretical description is in the works. We are also investigating ways to approximate data for collisional quenching involving atoms and water vapour.
 
 The code is distributed under a GNU GPL license. If you intend to modify this code, though not required, it is prefered that you contact me for help or recommendations in updating/modifying the codes.
+
+--------
 
 The code is built to use atomic data from the NIST ASD:
 https://physics.nist.gov/PhysRefData/ASD/lines_form.html
@@ -28,8 +30,6 @@ The solar spectrum assumed in the model is provided as a compressed file (uncomp
           from various space- and ground-based measurements of the solar spectrum, including the famous measurements of Kurucz.
           
 The code is currently capable of assuming two line profiles when computing absorption/stimulated emission rates: a delta function, and a doppler (thermal) profile.
-
-A detailed User Guide is in the works, as well as improved functionality to use approximate data for e.g. collisional quenching. 
 
 Be advised that the code DOES NOT check that all lines are connected to ground; that is up to the user. As a short-term workaround, it is recommended to set the "upper_cutoff" variable to the ionization potential value in cm^-1 so that auto-ionizing levels are not included. Auto-ionizing level data is typically lacking, and will not have a direct or indirect radiative pathway to ground, leading to failures in the matrix solver. 
 
