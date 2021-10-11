@@ -12,7 +12,7 @@ A sample file, "ni0 example script.py" shows the syntax and order of function ca
 The syntax for performing Monte-Carlo iterations to generate approximate model uncertainties with 10 iterations is provided. Note that 10^4 or more iterations
 are required for good convergence.
 
-The solar spectrum assumed in the model, the default "0-2730_vac.txt" file, contains the following:
+The solar spectrum assumed in the model is provided as a compressed file (uncompressed it is ~200mb). The default "0-2730_vac.txt" file, contains the following:
 0 - 168 nm: The UV coronol/chromosphere model of Fontenla et al (2014) [1]. This spectrum shows good agreement with measurements of the quiet sun spectrum from the SORCE mission.
 168 - 200.06 nm: SOLSTICE quiet-sun measurements with 0.1 nm resolution
 200.06 - 202 nm: Hall and Anderson (1991) UV measurements [2]
