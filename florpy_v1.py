@@ -85,12 +85,17 @@ def add_element_to_model(flor,element_string):
 
 #%%
 def blackbody_wave(wavelength, temp=5777):
-    #Adjusted on 05-25-2021 to accomodate changes made to flux calc. 
-    #temp in Kelvin, all in SI
-    #This function is not a typical blackbody; it reads in a wavelength (in nm), and outputs
-    #Output intensity is W/m^3 
-    #Assuming defined in nm, we convert:
-    wavelength = wavelength * 1e-9
+    """
+    This blackbody function is modified from a standard blackbody to be in wavelength space and is compatible with the other codes 
+    contained within this file. 
+    
+    The factor of pi corrects for solid angle; when used to simulate an entire solar spectrum numerically, output 
+    integrates to 1358 W/m^2 when scaled properly. 
+    
+    Temperature is in Kelvin; wavelength is in nm.
+    Input wavelength is in nanometers.
+    """
+    wavelength = wavelength * 1e-9 #Convert to meters.
     h = 6.62607004e-34
     c = 299792458
     k = 1.38064852e-23
@@ -98,13 +103,13 @@ def blackbody_wave(wavelength, temp=5777):
     exp_term = 1/(np.exp(exp_factor) - 1) #calculate exponential. Then, calculate BB intensity (W/m^2 per wavelength(m) per ster.):
     intensity = (2 * h * c**2 / (wavelength**5) )* exp_term
     intensity = np.pi * intensity
-    #The factor of pi corrects for solid angle; 
-    #Above function integrates to 1358 W/m^2 when integrated and projected to 1AU by (Rsun (m) / 1 AU (m))^2    
-    return intensity
+    return(intensity)
 
 #%%
 def build_model():
-    #06-11-2021 SJB Initiates Dict structure for flor model
+    """
+    Initialize dictionary structure. A user could define this on their own, but best to provide this for those unfamiliar with dictionaries.
+    """
     flor = {}
     return(flor)
 
@@ -209,7 +214,6 @@ def calc_line_intensities(pops,idx,rel_levs,geo_vel,renorm):
 
 def convert_to_float(frac_str):
     """
-    Updated 06-11-2021 by SJB
     This converts a string to float; it is intended to do 2 things:
      1. Remove flag characters from "questionable" levels in NIST level files, and 
      2. Convert half-integer J's, e.g. 3/2, to decimals (1.5)
@@ -239,8 +243,6 @@ def convert_to_float(frac_str):
 #%%
 def define_rad_fields(flor,element_string,rad_source,bbtemp = 5777, radfiles=[], vac_or_air = []):
     """
-    SJB
-    06-11-2021
     This function defines the radiation field(s) used. 
     
     IF rad_source = 'default', the following spectra is used with all wavelengths in VACUUM NM:
@@ -303,9 +305,12 @@ def define_rad_fields(flor,element_string,rad_source,bbtemp = 5777, radfiles=[],
 
 #%%
 def doppler(wavelength,velocity):
-    #positive velocity defined as away from sun
-    #Updated 06-21-2021 to relativist form for completeness
-    #Wavelength in nm; velocity in m/s. All calls in the model convert from km/s to m/s before calling this function.
+    """
+    Calculates the doppler-shifted wavelength "wavelength" shifted by "velocity"
+    Positive is defined as away from the sun (redshift)
+    
+    Wavelength in nm, velocity in m/s.
+    """
     c = 299792458
     vel = velocity #assuming m/s
     rest_wavelength = wavelength #nm
@@ -689,9 +694,8 @@ def generate_rad_grid(rad, wavelengths):
 #%%
 def grab_uncertainty(lines,col):
     """
-    Added 01-08-2021. This function is used for converting A value uncertainty ratings in NIST to numbers
-    pass in raw_lines array, and 'col' is the col# of the accuracy ratings; using standard input names,
-    this is the "uncert_col" variable
+    Used to convert transition rate accuracy ratings in NIST (e.g. "A", "B+") to their numerical equivalent 
+    in the NIST transition rate accuracy scale. 
     """
     a_uncert = np.zeros((len(lines[:,0]),1),dtype=float) #output array A value uncertainties
     for i in range(0,len(lines[:,0])):
@@ -724,18 +728,18 @@ def grab_uncertainty(lines,col):
 #%%
 def load_nist_data(flor,element_string,lines_file, levels_file):
     """
-    SJB
-    06-11-2021
     This function reads in NIST lines and levels files from ASD and adds the data to the model.
     
-    This function assumes the data is saved in tab-delimited format. Please only use lines with transition rates.
+    Download data from the NIST ASD in tab-delimited format. There are two restrictions:
+        1. Only download the lines data with transition rates, and
+        2. Energies must be in units of cm^-1. 
     """
     print('Loading Atomic Data...')
     raw_lines_un = np.genfromtxt(lines_file, delimiter='\t', dtype = str)
     raw_levs_un = np.genfromtxt(levels_file,delimiter ='\t',skip_header=1,usecols=(0,1,2,3),dtype=str)
     raw_lines = np.copy(raw_lines_un)
     raw_levs = np.copy(raw_levs_un)
-    #We strip all of the extra "" characters:
+    #We strip all of the extra "" characters left over from the NIST ASD data pull:
     for i in range(0,len(raw_lines[:,0])):
         for j in range(0,len(raw_lines[0,:])):
             raw_lines[i,j] = raw_lines[i,j].replace('"','')
@@ -774,17 +778,11 @@ def load_nist_data(flor,element_string,lines_file, levels_file):
                 lines[i,j] = convert_to_float(raw_lines[i,j])
             except ValueError:
                 pass
-    ####    Following added on 08-10-2021:
-    ####
-    #For the float data, we convert the accuracy rating over to a float:
     uncert_grabbed = grab_uncertainty(raw_lines,uncert_col)
     lines[:,uncert_col] = np.reshape(uncert_grabbed,len(uncert_grabbed))
     #Note: The reshape is necessary to re-cast in appropriate format
     flor[element_string]['lines_data_float'] = lines
-    ####
-    ####    End of 08-10-2021 addition
-    ####
-    #Save the column indices we'll need:
+    #Save the columns into the dictionary structure:
     flor[element_string]['column_indices'] = {'ritz_col' : ritz_col,
                                               'aval_col' : aval_col,
                                               'lower_col' : lower_col,
@@ -804,7 +802,7 @@ def load_nist_data(flor,element_string,lines_file, levels_file):
                 pass
     #
     flor[element_string]['levs_str'] = raw_levs
-    #Added sort to following line on 06-22-2021
+    #Sort for cleanliness :)
     flor[element_string]['levs_float'] = levs[np.argsort(levs[:,3])]
     flor[element_string]['bad_levels'] = bad_levels_out #Saved for later
     print('Lines and levels loaded for model "{:}"'.format(element_string))
@@ -833,189 +831,6 @@ def load_orbit_data(flor,element_string,orbit_id,orbital_conds, t_comet = 280, m
     return(flor)
 
 #%%
-def numerically_integrate(array):
-    #Simple function for numerically integrating values using rectangles:
-    #Ex: array has columns: (0) wavelength, (1) intensity
-    integrated = 0
-    #Note that the limits are not included; the limits must be taken care of by ONLY passing in values to be integrated
-    for i in range(0,len(array[:,0])-1):
-        lower_x = array[i,0]
-        upper_x = array[i+1,0]
-        diff = upper_x - lower_x
-        avg = (array[i,1] + array[i,1])/2
-        integrated = integrated + (avg*diff)
-    return(integrated)    
-
-#%%
-def populate_lhs(lhs_empty,idx,rel_levs):
-    """
-    SJB
-    Added on 03-02-2021 to functionalize construction/generate etc of matrices.
-    """
-    construct_start = time.time()
-    print('Starting Population of LHS Matrix ...')
-    for i in range(0,len(idx[:,0])):
-        lower_idx = int(idx[i,0]) #lower level indx for line lines[i,0], belonging to level index idx[i,0] in nist arr
-        upper_idx = int(idx[i,1]) #similarly, upper level indx
-        #troubleshooting flags:
-        low_idx_mapped = int(rel_levs[lower_idx,2])
-        up_idx_mapped = int(rel_levs[upper_idx,2])
-        aval = float(idx[i,4])
-        absorp_rate = float(idx[i,5])
-        stim_rate = float(idx[i,6])
-        """
-        Upper level denoted by j, lower by i:
-        Spont. emission, A_j->i values populate two cells: positive term to [i,j], negative to [j,j]
-        Stim. emission, B_j->i values populate two cells: positive term to [i,j], negative to [j,j]
-        Absorption, B_i->j values populate two cells: negative to [i,i], positive to [j,i]
-        """
-        #A Value; 2 locations. lower level:
-        lhs_empty[low_idx_mapped,up_idx_mapped] = lhs_empty[low_idx_mapped,up_idx_mapped] + aval #Correct
-        lhs_empty[up_idx_mapped,up_idx_mapped] = lhs_empty[up_idx_mapped,up_idx_mapped] - aval #Correct
-        #stimulated emission:
-        lhs_empty[low_idx_mapped,up_idx_mapped] = lhs_empty[low_idx_mapped,up_idx_mapped] + stim_rate #Correct
-        lhs_empty[up_idx_mapped,up_idx_mapped] = lhs_empty[up_idx_mapped,up_idx_mapped] - stim_rate #Correct
-        #absorption:
-        lhs_empty[low_idx_mapped,low_idx_mapped] = lhs_empty[low_idx_mapped,low_idx_mapped] - absorp_rate #Correct
-        lhs_empty[up_idx_mapped,low_idx_mapped] = lhs_empty[up_idx_mapped,low_idx_mapped] + absorp_rate #Correct
-    construct_end = time.time()
-    print('Rate Matrices Populated in {:} seconds'.format(round(construct_end - construct_start),3))
-    return(lhs_empty)
-
-def prep_indexing(flor,element_string,orbit_id,rad_choice, bbsupp, lower_en_cutoff, upper_en_cutoff, aval_min):
-    """
-
-    The purpose of this function is to prepare the lines/levels list for ONLY those that are within the limits of the radiation fields.
-    If we include the lines without radiation field components and the blackbody suppelementation is applied, we'll have
-    a singular matrix and the solution methods will struggle. 
-    """
-    print('Checking raw line list for relevant Lines.')
-    #First, we make a copy of the TOTAL lines file.
-    checklines = np.copy(flor[element_string]['lines_data_float'])
-    ritz_col = flor[element_string]['column_indices']['ritz_col']
-    upper_col = flor[element_string]['column_indices']['upper_col']
-    lower_col = flor[element_string]['column_indices']['lower_col']
-    aval_col = flor[element_string]['column_indices']['aval_col']
-    #Row indexes of lines to eventually REMOVE from checklines:
-    idx_to_remove = np.zeros((len(checklines[:,0]),2),dtype=int)
-    #Generate all of the limits:
-    lims = np.empty((0,2))
-    media = np.empty((0,1), dtype = str)
-    obj_vel = flor[element_string][orbit_id]['orbit_params']['helio_vel_kms'] * 1e3 #convert to m/s
-    for key in flor[element_string]['rad_choices'][rad_choice]:
-        lims_range = flor[element_string]['rad_choices'][rad_choice][key]['lims']
-        lims = np.append(lims,lims_range,axis=0)
-        medium = np.empty((1,1),dtype=str)
-        medium[0,0] = flor[element_string]['rad_choices'][rad_choice][key]['medium']
-        media = np.append(media,medium,axis=0)
-        for i in range(0,len(checklines[:,0])):
-            idx_to_remove[i,0] = i
-            wave_vac = doppler(1e9 * h * c / (cm_to_J * (checklines[i,upper_col] - checklines[i,lower_col])) ,obj_vel) #
-            wave_air = doppler(vac_to_air(wave_vac),obj_vel)
-            for j in range(0,len(lims[:,0])):
-                if ('v' in media[j,0]):
-                    wave_to_use = wave_vac
-                else:
-                    wave_to_use = wave_air
-                if ((lims[j,0] < wave_to_use < lims[j,1]) and (checklines[i,upper_col] < upper_en_cutoff) and (checklines[i,lower_col] < lower_en_cutoff) and (checklines[i,aval_col] > aval_min)):  #Check wavelength limits and upper energy cutoff
-                    idx_to_remove[i,1] = 1
-    #The only lines w/o a '1' to indicate keeping the line are outside the radiation field. We flag those for keeping if bbsupp == True:
-    for i in range(0,len(checklines[:,0])):
-        if ((bbsupp == True) and (checklines[i,upper_col] < upper_en_cutoff) and (checklines[i,lower_col] < lower_en_cutoff) and (checklines[i,aval_col] > aval_min)):
-            idx_to_remove[i,1] = 1
-    #After this procedure, all lines w/ a valid radfield will have a '1' in their corresponding entry in idx_to_remove
-    #We set by descending order of col0:
-    idx_to_remove = idx_to_remove[idx_to_remove[:,0].argsort()[::-1]]    
-    for i in range(0,len(idx_to_remove[:,0])):
-        if (idx_to_remove[i,1] == 0):
-            checklines = np.delete(checklines,idx_to_remove[i,0],0)
-    #The checklines array with deleted rows is now what we want as our "input" line data for the model.
-    flor[element_string][orbit_id]['relevant_lines'] = checklines
-    return(flor)
-
-def vac_to_air(wavelength_vac):
-    #IAU Standard Conversion (Morton 2000)
-    #NOTE: inputs assumed in nm, which we convert to angstroms required for the conversion:
-    #NOTE: Previous versions of this function in my codes had 's' instead of 's**2'; please verify you are using correct version
-    #if copy+pasting from my older codes.
-    wavelength_vac = wavelength_vac * 10 #convert to ang
-    s = 1e4 / wavelength_vac
-    n = 1 + 0.0000834254 + (0.02406147)/(130 - s**2) + (0.00015998)/(38.9 - s**2)
-    wavelength = wavelength_vac / n
-    wavelength_conv = wavelength / 10 #convert back to nm
-    return(wavelength_conv)
-
-#%%
-def error_calc(fluxes,raw_lines,raw_levs,ritz_col,uncert_col,lower_col,upper_col,aval_col,num_samples,model_lines,renorm=False):
-    """
-    This is a custom function for iterating the fluorescence model and deriving approximate uncertainties on line intensities.
-    There are a large number of user inputs; these inputs include the original model inputs, and additional ones that the iteration procedure requires.
-    
-        USER INPUTS:
-    uncert_col: column # (note 0 indexing in python) of the NIST A value uncertainty ratings.
-    num_samples = number of model iterations to run
-    model_lines: lines array (tuple element 1 from "fluorescence_spectra" output); will be changed
-    in future release.
-    """
-    
-    scatter = np.zeros((len(model_lines[:,0]),3+num_samples))
-    scatter[:,0] = model_lines[:,0]
-    scatter[:,1] = model_lines[:,1]
-    scatter[:,2] = model_lines[:,2]
-    original_avals = raw_lines[:,aval_col]
-    uncerts = grab_uncertainty(raw_lines,uncert_col)
-    for i in range(0,num_samples):
-        new_avals = generate_new_avals(original_avals,uncerts)    
-        new_lines = np.copy(raw_lines)
-        #We save the new avals over the old ones in new_lines arr.
-        #The new_avals has dimension (#lines,1), and we want (#lines). Reshape:
-        new_lines[:,aval_col] = np.reshape(new_avals,len(new_avals))
-        spectra = fluorescence_spectra(fluxes,new_lines,raw_levs,ritz_col,lower_col,upper_col,aval_col,renorm=False)  
-        new_spec = spectra[1]
-        new_intens = new_spec[:,2]
-        scatter[:,3+i] = new_intens
-    return(scatter) 
-
-def error_process(errdat):
-    """
-    Checked on 02-25-2021.
-    This function processes the output of "error_calc" and calculates standard deviations of line intensities following the iterations performed in
-    error_calc. This function is intended to directly pass the output of error_calc into this function.
-    """
-    import numpy as np
-    #Pre-allocate the array size; quicker than using np.append to add new rows every time:
-    err_out = np.zeros((len(errdat[:,0]),6)) 
-    err_out[:,0] = errdat[:,0] #Air wave
-    err_out[:,1] = errdat[:,1] #vac Wave 
-    err_out[:,2] = errdat[:,2] #Intensity
-    for i in range(0,len(errdat[:,0])):
-        max_val = np.amax(errdat[i,3:])
-        min_val = np.amin(errdat[i,3:])
-        stdev = np.std(errdat[i,3:])
-        #Save:
-        err_out[i,3] = min_val
-        err_out[i,4] = max_val
-        err_out[i,5] = stdev
-    return(err_out)
-
-#%%
-def numerically_integrate_2col(x_arr,y_arr):
-    """
-    Simple function for numerically integrating values using rectangles
-    The inputs are x_arr, the x values, and y_arr, the y valuues.
-    Note that the limits are not included; the limits must be taken care of by ONLY passing in values to be integrated.
-    This code will integrate over ALL of the data input here.
-    """
-    integrated = 0
-    for i in range(0,len(x_arr[:])-1):
-        lower_x = x_arr[i]
-        upper_x = x_arr[i+1]
-        diff = upper_x - lower_x
-        avg = (y_arr[i] + y_arr[i])/2
-        integrated = integrated + (avg*diff)
-    return(integrated)      
-
-#%%
 def matrix_solve(lhs,rhs,off_diag=False,diag=False):
     """
     Custom function for solving Ax=B in this context. 
@@ -1027,7 +842,6 @@ def matrix_solve(lhs,rhs,off_diag=False,diag=False):
     """
     solve_flag = 1
     solve_start_time = time.time()
-    #Added on 03-02-2021 to better handle the fluorescence model.
     pops = np.zeros((len(rhs),1))
     #We need to do this iteratively. For most systems, the solution easily follows from np.linalg.inv.    
     try:
@@ -1087,20 +901,152 @@ def matrix_solve(lhs,rhs,off_diag=False,diag=False):
                     print('Valid solution found with Singular Value Decomposition')
     return(solve_flag,pops)    
 
+#%%
+
+def numerically_integrate_2col(x_arr,y_arr):
+    """
+    Function for numerically integrating data in two separate arrays with matching length, where x_arr is the x values
+    and y_arr is the y values.
+    It is planned to replace this with a faster scipy function in the near-term.
+    The below implementation gives very similar results to scipy, but it slower. 
+    Uses rectangles.
+    """
+    integrated = 0
+    for i in range(0,len(x_arr[:])-1):
+        lower_x = x_arr[i]
+        upper_x = x_arr[i+1]
+        diff = upper_x - lower_x
+        avg = (y_arr[i] + y_arr[i])/2
+        integrated = integrated + (avg*diff)
+    return(integrated)      
+
+def numerically_integrate(array):
+    """
+    Function for numerically integrating data in 2 column format; Col 0 (x), Col 1 (y).
+    It is planned to replace this with a faster scipy function in the near-term.
+    The below implementation gives very similar results to scipy, but it slower. 
+    Uses rectangles.
+    """
+    integrated = 0
+    #Note that the limits are not included; the limits must be taken care of by ONLY passing in values to be integrated
+    for i in range(0,len(array[:,0])-1):
+        lower_x = array[i,0]
+        upper_x = array[i+1,0]
+        diff = upper_x - lower_x
+        avg = (array[i,1] + array[i,1])/2
+        integrated = integrated + (avg*diff)
+    return(integrated)    
+
+#%%
+def populate_lhs(lhs_empty,idx,rel_levs):
+    """
+    This function takes in the right-hand-side and left-hand-side matrices of the rate equation we are interested in, Ax=B. 
+    This code takes in the arrays of relevant data (index mapping and all rates)
+    and populates the rate matrix "A"
+    """
+    construct_start = time.time()
+    print('Starting Population of LHS Matrix ...')
+    for i in range(0,len(idx[:,0])):
+        lower_idx = int(idx[i,0]) #lower level indx for line lines[i,0], belonging to level index idx[i,0] in nist arr
+        upper_idx = int(idx[i,1]) #similarly, upper level indx
+        #troubleshooting flags:
+        low_idx_mapped = int(rel_levs[lower_idx,2])
+        up_idx_mapped = int(rel_levs[upper_idx,2])
+        aval = float(idx[i,4])
+        absorp_rate = float(idx[i,5])
+        stim_rate = float(idx[i,6])
+        """
+        Upper level denoted by j, lower by i:
+        Spont. emission, A_j->i values populate two cells: positive term to [i,j], negative to [j,j]
+        Stim. emission, B_j->i values populate two cells: positive term to [i,j], negative to [j,j]
+        Absorption, B_i->j values populate two cells: negative to [i,i], positive to [j,i]
+        """
+        #A Value; 2 locations. lower level:
+        lhs_empty[low_idx_mapped,up_idx_mapped] = lhs_empty[low_idx_mapped,up_idx_mapped] + aval
+        lhs_empty[up_idx_mapped,up_idx_mapped] = lhs_empty[up_idx_mapped,up_idx_mapped] - aval
+        #stimulated emission:
+        lhs_empty[low_idx_mapped,up_idx_mapped] = lhs_empty[low_idx_mapped,up_idx_mapped] + stim_rate
+        lhs_empty[up_idx_mapped,up_idx_mapped] = lhs_empty[up_idx_mapped,up_idx_mapped] - stim_rate
+        #absorption:
+        lhs_empty[low_idx_mapped,low_idx_mapped] = lhs_empty[low_idx_mapped,low_idx_mapped] - absorp_rate
+        lhs_empty[up_idx_mapped,low_idx_mapped] = lhs_empty[up_idx_mapped,low_idx_mapped] + absorp_rate
+    construct_end = time.time()
+    print('Rate Matrices Populated in {:} seconds'.format(round(construct_end - construct_start),3))
+    return(lhs_empty)
+
+def prep_indexing(flor,element_string,orbit_id,rad_choice, bbsupp, lower_en_cutoff, upper_en_cutoff, aval_min):
+    """
+    The purpose of this function is to prepare the lines/levels list for ONLY those that are within the limits of the radiation fields.
+    If we include the lines without radiation field components and the blackbody suppelementation is applied, we'll have
+    a singular matrix and the solution methods will struggle. 
+    """
+    print('Checking raw line list for relevant Lines.')
+    #First, we make a copy of the TOTAL lines file.
+    checklines = np.copy(flor[element_string]['lines_data_float'])
+    ritz_col = flor[element_string]['column_indices']['ritz_col']
+    upper_col = flor[element_string]['column_indices']['upper_col']
+    lower_col = flor[element_string]['column_indices']['lower_col']
+    aval_col = flor[element_string]['column_indices']['aval_col']
+    #Row indexes of lines to eventually REMOVE from checklines:
+    idx_to_remove = np.zeros((len(checklines[:,0]),2),dtype=int)
+    #Generate all of the limits:
+    lims = np.empty((0,2))
+    media = np.empty((0,1), dtype = str)
+    obj_vel = flor[element_string][orbit_id]['orbit_params']['helio_vel_kms'] * 1e3 #convert to m/s
+    for key in flor[element_string]['rad_choices'][rad_choice]:
+        lims_range = flor[element_string]['rad_choices'][rad_choice][key]['lims']
+        lims = np.append(lims,lims_range,axis=0)
+        medium = np.empty((1,1),dtype=str)
+        medium[0,0] = flor[element_string]['rad_choices'][rad_choice][key]['medium']
+        media = np.append(media,medium,axis=0)
+        for i in range(0,len(checklines[:,0])):
+            idx_to_remove[i,0] = i
+            wave_vac = doppler(1e9 * h * c / (cm_to_J * (checklines[i,upper_col] - checklines[i,lower_col])) ,obj_vel) #
+            wave_air = doppler(vac_to_air(wave_vac),obj_vel)
+            for j in range(0,len(lims[:,0])):
+                if ('v' in media[j,0]):
+                    wave_to_use = wave_vac
+                else:
+                    wave_to_use = wave_air
+                if ((lims[j,0] < wave_to_use < lims[j,1]) and (checklines[i,upper_col] < upper_en_cutoff) and (checklines[i,lower_col] < lower_en_cutoff) and (checklines[i,aval_col] > aval_min)):  #Check wavelength limits and upper energy cutoff
+                    idx_to_remove[i,1] = 1
+    #The only lines w/o a '1' to indicate keeping the line are outside the radiation field. We flag those for keeping if bbsupp == True:
+    for i in range(0,len(checklines[:,0])):
+        if ((bbsupp == True) and (checklines[i,upper_col] < upper_en_cutoff) and (checklines[i,lower_col] < lower_en_cutoff) and (checklines[i,aval_col] > aval_min)):
+            idx_to_remove[i,1] = 1
+    #After this procedure, all lines w/ a valid radfield will have a '1' in their corresponding entry in idx_to_remove
+    #We set by descending order of col0:
+    idx_to_remove = idx_to_remove[idx_to_remove[:,0].argsort()[::-1]]    
+    for i in range(0,len(idx_to_remove[:,0])):
+        if (idx_to_remove[i,1] == 0):
+            checklines = np.delete(checklines,idx_to_remove[i,0],0)
+    #The checklines array with deleted rows is now what we want as our "input" line data for the model.
+    flor[element_string][orbit_id]['relevant_lines'] = checklines
+    return(flor)
+#%%
+def vac_to_air(wavelength_vac):
+    """
+    This function converts a wavelength from vacuum nm to vacuum in standard air. The implementation is from the IAU standard in
+    Morton (2000). 
+    Input assumed in vacuum nm. 
+    """
+    wavelength_vac = wavelength_vac * 10 #convert to ang
+    s = 1e4 / wavelength_vac
+    n = 1 + 0.0000834254 + (0.02406147)/(130 - s**2) + (0.00015998)/(38.9 - s**2)
+    wavelength = wavelength_vac / n
+    wavelength_conv = wavelength / 10 #convert back to nm
+    return(wavelength_conv)
+
 def zeros_check(arr):
-    #Added on 03-02-2021; searches quickly for 0s in the input array. If present, break and return True in the bool.
+    """
+    This function checks for 0s in the array; used to verify a good solution in the matrix solver.
+    """
     check_bool = False
     for p_check in range(0,len(arr[:])):
         if (arr[p_check] == 0):
            check_bool = True
            break
     return(check_bool)
-
-
-
-
-
-
 
 
 
