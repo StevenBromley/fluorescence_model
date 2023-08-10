@@ -1,3 +1,18 @@
+
+This github repo contains two folders, each with two versions of my fluorescence model. The first, labeled bromley_2021, 
+is the same version used in Bromley et al PSJ (2021).
+
+The new version, saved under florpy_current, is intended for use with CO+ and uses the same 'base' code, with some improved functionality.
+Lines and level lists, as well as sample files showing how to run both the equilibrium and time-dependent models are provided.
+
+I've left the old documentation below for now until I have an updated document I am comfortable distributing.
+
+SJB
+
+-------
+
+
+
 The code contained in this repo is the same version used in Bromley et al 2021 in PSJ (see also arxiv): "Atomic iron and nickel in the coma of C/1996 B2 (Hyakutake): production rates, emission mechanisms, and possible parents". The theoretical description is available in Bromley et al 2021, but an updated User Guide with theoretical description is in the works. We are also investigating ways to approximate data for collisional quenching involving atoms and water vapour.
 
 The code is distributed under a GNU GPL license. If you intend to modify this code, it is prefered that you contact me for help or recommendations in updating/modifying the codes.
