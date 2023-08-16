@@ -3,12 +3,15 @@ This github repo contains two folders, each with two versions of my fluorescence
 is the same version used in Bromley et al PSJ (2021).
 
 The new version, saved under florpy_current, is intended for use with CO+ and uses the same 'base' code, with some improved functionality.
-Lines and level lists, as well as sample files showing how to run both the equilibrium and time-dependent models are provided.
+Lines and level lists, as well as sample files showing how to run both the equilibrium and time-dependent models are provided. 
+These files correspond to the model described in Bromley et al 2023 (Submitted to MNRAS in Aug. 2023).
 
 Note that the provided radiation fields are compressed in .tar.gz. files, since their raw size (100-200 mb) exceeds the limit for GitHub. If you want to use the radiation fields I provided,
 you'll need to un-tar them first.
 
 I've left the old documentation below for now until I have an updated document I am comfortable distributing.
+
+In the meantime, if you have concerns, questions, or suggestings for improvements, changes, or added functionality, please contact me at sjb0068@auburn.edu. I am happy to coordinate any of these.
 
 SJB
 
