@@ -11,7 +11,7 @@ you'll need to un-tar them first.
 
 I've left the old documentation below for now until I have an updated document I am comfortable distributing.
 
-In the meantime, if you have concerns, questions, or suggestings for improvements, changes, or added functionality, please contact me at sjb0068@auburn.edu. I am happy to coordinate any of these.
+In the meantime, if you have concerns, questions, or suggestions for improvements, changes, or added functionality, please contact me at sjb0068@auburn.edu. I am happy to coordinate any of these.
 
 SJB
 
