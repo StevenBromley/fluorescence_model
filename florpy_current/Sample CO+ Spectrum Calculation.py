@@ -6,7 +6,7 @@ Aug 9, 2023
 
 Sample File showing some functionality of FlorPy
 """
-from fluor_dict_v08092023 import *
+from fluor_dict_v12122023 import *
 from molecular_utils_florpy import *
 
 #Output file for the computed g-factors:
@@ -18,7 +18,7 @@ element_string = 'co+'
 levs_file = 'Base(MAH)_energy_levels.txt'
 lines_file = 'Base(MAH)_transitions.txt'
 # The ECO(TR) and ECO+ models can be run by simply swapping the filenames in variables levs_file and lines_file to their respective versions.
-# Note: It is advised NOT to mix versions.
+# Note: It is advised NOT to mix of energy level and transitions files. 
 #Define orbital parameters:
 solar_dist = 1 #0.66 #Astronomical Units
 obj_vel = 0 #-1.7 #km/s; internally converted to m/s when needed.
@@ -85,10 +85,11 @@ plt.savefig('Sample stick spectrum.pdf',dpi=200)
 #   We first index the transitions into the various bands by running separate_vib_bands().
 #   A second function computes the band luminosities of all of the bands in the model.
 #   Sample syntax for grabbing this information from the dictionary is provided below, and the band luminosities are saved to a file:
-
+#%%
 flor = separate_vib_bands(flor,element_string,orbit_id)
+#%%
 flor = auto_gen_band_lum(flor,element_string,orbit_id)
-
+#%%
 x_x_bandlums = flor[element_string][orbit_id]['outputs']['band_gfacs']['X_X']
 pi_x_bandlums = flor[element_string][orbit_id]['outputs']['band_gfacs']['Pi_X']
 b_x_bandlums = flor[element_string][orbit_id]['outputs']['band_gfacs']['B_X']

@@ -6,7 +6,7 @@ Aug 9, 2023
 
 Sample File showing some of the time-dependent functionality of FlorPy
 """
-from fluor_dict_v08092023 import *
+from fluor_dict_v12122023 import *
 from molecular_utils_florpy import *
 
 #Output file for the computed g-factors:
@@ -80,6 +80,7 @@ Just as in the equilibrium case (see the sample spectrum file), we can auto-comp
 flor = separate_vib_bands(flor,element_string,orbit_id)
 flor = auto_gen_td_bandlums(flor,element_string,orbit_id,td_id)
 tdbands = flor[element_string][orbit_id][td_id]['band_gfacs']
+#
 xx_bands = tdbands['X_X']
 ct_bands = tdbands['Pi_X']
 fn_bands = tdbands['B_Pi']
@@ -88,7 +89,9 @@ fn_bands = tdbands['B_Pi']
 #   A sample plot of a level population versus time. We'll do the ground state. For reference, the time-dependent populations array has levels in energy energy (1 level per row), and
 #   the number of columns is equal to the number of timesteps defined in time_grid above.
 td_pops = flor[element_string][orbit_id][td_id]['time_dep_pops']
-
+#   The td_pops array contains the time-dependent level populations. Each population is stored in a row, with time increasing as one moves to further columns
+#   Ex: td_pops[0,:] -> Population of level 0 (ground) as a function of time
+#       td_pops[1,:] -> population of level 1 (the first level above ground) as a function of time, and so on.
 plt.clf()
 plt.figure(figsize=(10,10))
 plt.xscale('log')
@@ -100,7 +103,8 @@ plt.savefig('Sample_td_population.pdf',dpi=200)
 #%%
 # We can also show a time-dependent g-factor. We'll take a random transition somewhere near 400 nm:
 td_gfacs = flor[element_string][orbit_id][td_id]['time_dep_gfactors']
-index = 1672
+#   Just like the populations, the td_gfacs array is indexed such that each row is a transition, and the columns designate the timesteps, with the last column as the last timestep.
+index = 1672 #index of a random transition
 plt.clf()
 plt.figure(figsize=(10,10))
 plt.xscale('log')
@@ -121,7 +125,8 @@ upper_ind = find_nearest_index(gfacs[:,0], upper_x)
 wavelengths = gfacs[:,0]
 
 #The plotting:
-time_index = find_nearest_index(time_grid, 0.01)
+#We search the time grid for the time closest to 0.01 seconds:
+time_index = find_nearest_index(time_grid, 0.01) 
 plt.clf()
 plt.subplots(nrows=3,ncols=1,figsize=(10,10))
 plt.subplot(311)
@@ -129,6 +134,7 @@ plt.stem(wavelengths[lower_ind:upper_ind], td_gfacs[lower_ind:upper_ind,time_ind
 plt.legend()
 plt.grid()
 #
+#We search the time grid for the time closest to 20 seconds:
 time_index = find_nearest_index(time_grid, 20)
 plt.subplot(312)
 plt.stem(wavelengths[lower_ind:upper_ind], td_gfacs[lower_ind:upper_ind,time_index], label = 't = {:} s'.format(time_grid[time_index]), markerfmt = ' ')
@@ -136,6 +142,7 @@ plt.legend()
 plt.grid()
 plt.ylabel('Time-dependent g-factor (J/s/mol)', fontsize=15)
 #
+#We search the time grid for the time closest to 600 seconds:
 time_index = find_nearest_index(time_grid, 600)
 plt.subplot(313)
 plt.stem(wavelengths[lower_ind:upper_ind], td_gfacs[lower_ind:upper_ind,time_index], label = 't = {:} s'.format(time_grid[time_index]), markerfmt = ' ')
