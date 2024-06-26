@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Version 08.09.2023 of "FlorPy"
+Version 06262024 of "FlorPy"
 
 See Bromley et al PSJ 2021 and Bromley et al 2023 for details
 
