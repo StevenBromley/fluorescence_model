@@ -1,0 +1,21 @@
+This directory presently contains two solar spectra. Both are compressed to .tar.gz files
+to avoid the 100 MB file size limit on GitHub. When uncompressed the files are ~228 MB each.
+
+I recommend utilizing the second solar spectrum, described below.
+
+The first, 0-2730_vac.txt, is described in Bromley et al 2023. The data are in two column format,
+with Column 0 being Wavelength in vacuum nm. Column 1 (the second column using 0-indexing)
+contains the solar flux in units of W/m^2/nm at r = 1 AU
+
+The second solar spectra, 0-14000_vac.txt, is described in Bromley et al MNRAS 2023.
+The second solar spectrum is expanded to lambda = 14,000 nm using the Planetary Spectrum Generator.
+
+On Mac or Linux machines, the files can be uncompressed from .tar.gz to .txt files by running:
+
+tar -xvzf 0-2730_vac.tar.gz
+
+and
+
+tar -xvzf 0-14000_vac.tar.gz
+
+

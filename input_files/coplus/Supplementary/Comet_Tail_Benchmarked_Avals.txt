@@ -1,0 +1,92 @@
+A2Pi	X2Sigma	"This file contains the original Comet Tail transition rates from Qin et al. 2017 cited in Bromley et al 2023, and those benchmarked by comparisons to calibrated electron impact spectra (see Appendix of the manuscript)."			
+v'	v''	Transition Rate (Original)	Transition Rate (Benchmarked)	Per cent Change w.r.t. original:	How modified?
+0	0	2.79E+04	3.36E+04	20.41953332	Integrated + Manual Rescale
+0	1	6.98E+04	1.00E+05	43.69181961	Integrated + Manual Rescale
+0	2	7.66E+04	1.27E+05	66.41460455	Integrated + Manual Rescale
+0	3	4.88E+04	3.46E+02	-99.29108275	Integrated
+0	4	2.00E+04	5.04E+01	-99.74806421	Aval Fixed w.r.t. (0-0)
+0	5	5.39E+03	1.36E+01	-99.74806421	Aval Fixed w.r.t. (0-0)
+0	6	9.48E+02	2.39E+00	-99.74806421	Aval Fixed w.r.t. (0-0)
+0	7	1.02E+02	2.57E-01	-99.74806421	Aval Fixed w.r.t. (0-0)
+0	8	5.59E+00	1.41E-02	-99.74806421	Aval Fixed w.r.t. (0-0)
+0	9	8.61E-02	2.17E-04	-99.74806421	Aval Fixed w.r.t. (0-0)
+1	0	9.33E+04	8.92E+04	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	1	1.16E+05	1.11E+05	-4.407494514	Integrated
+1	2	3.36E+04	3.49E+04	3.781855579	Integrated + Manual Rescale
+1	3	1.30E+02	1.24E+02	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	4	1.54E+04	1.47E+04	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	5	1.89E+04	1.81E+04	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	6	9.26E+03	8.85E+03	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	7	2.39E+03	2.28E+03	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	8	3.30E+02	3.15E+02	-4.407494514	Aval Fixed w.r.t. (1-1)
+1	9	2.02E+01	1.93E+01	-4.407494514	Aval Fixed w.r.t. (1-1)
+2	0	1.67E+05	1.94E+05	16.17229853	Integrated
+2	1	7.79E+04	5.99E+04	-23.09306906	Integrated
+2	2	1.37E+03	2.11E+03	53.81386188	Manual Rescale
+2	3	3.97E+04	3.83E+04	-3.56667127	Integrated + Manual Rescale
+2	4	2.07E+04	1.59E+04	-23.09306906	Aval Fixed w.r.t. (2-1)
+2	5	8.36E+01	6.43E+01	-23.09306906	Aval Fixed w.r.t. (2-1)
+2	6	6.06E+03	4.66E+03	-23.09306906	Manual Rescale
+2	7	7.62E+03	5.86E+03	-23.09306906	Aval Fixed w.r.t. (2-1)
+2	8	3.10E+03	2.38E+03	-23.09306906	Aval Fixed w.r.t. (2-1)
+2	9	5.54E+02	4.26E+02	-23.09306906	Aval Fixed w.r.t. (2-1)
+3	0	2.13E+05	2.55E+05	19.64521496	Integrated + Manual Rescale
+3	1	1.73E+04	1.03E+04	-40.17739252	Manual Rescale
+3	2	4.89E+04	2.35E+04	-51.91205176	Integrated + Manual Rescale
+3	3	3.60E+04	1.92E+04	-46.66294874	Integrated
+3	4	1.02E+03	1.22E+03	19.64521496	Aval Fixed w.r.t (3-0)
+3	5	2.04E+04	2.44E+04	19.64521496	Aval Fixed w.r.t (3-0)
+3	6	8.41E+03	1.01E+04	19.64521496	Aval Fixed w.r.t (3-0)
+3	7	5.22E+01	6.25E+01	19.64521496	Aval Fixed w.r.t (3-0)
+3	8	3.37E+03	4.03E+03	19.64521496	Aval Fixed w.r.t (3-0)
+3	9	2.66E+03	3.18E+03	19.64521496	Aval Fixed w.r.t (3-0)
+4	0	2.18E+05	2.80E+05	28.24758659	Integrated
+4	1	1.27E+03	4.07E+03	220.6189665	Manual Rescale
+4	2	8.54E+04	3.01E+04	-64.73191369	Manual Rescale
+4	3	1.71E+03	2.19E+03	28.24758659	Manual Rescale
+4	4	3.32E+04	1.89E+04	-43.02319547	Integrated + Manual Rescale
+4	5	1.21E+04	1.55E+04	28.24758659	Aval Fixed w.r.t. (4-0)
+4	6	3.03E+03	3.89E+03	28.24758659	Aval Fixed w.r.t. (4-0)
+4	7	1.11E+04	1.42E+04	28.24758659	Aval Fixed w.r.t. (4-0)
+4	8	2.03E+03	2.60E+03	28.24758659	Aval Fixed w.r.t. (4-0)
+4	9	4.87E+02	6.25E+02	28.24758659	Aval Fixed w.r.t. (4-0)
+5	0	1.94E+05	2.70E+05	39.29393178	Integrated
+5	1	3.12E+04	4.68E+04	50.09046321	Integrated
+5	2	6.67E+04	9.29E+03	-86.07060682	Manual Rescale
+5	3	1.61E+04	5.61E+03	-65.17651706	Manual Rescale
+5	4	3.90E+04	8.96E+03	-77.01650126	Manual Rescale
+5	5	1.63E+03	2.27E+03	39.29393178	Aval Fixed w.r.t. (5-0)
+5	6	2.11E+04	2.94E+04	39.29393178	Aval Fixed w.r.t. (5-0)
+5	7	1.63E+03	2.27E+03	39.29393178	Aval Fixed w.r.t. (5-0)
+5	8	4.66E+03	6.49E+03	39.29393178	Aval Fixed w.r.t. (5-0)
+5	9	4.49E+03	6.25E+03	39.29393178	Aval Fixed w.r.t. (5-0)
+6	0	1.59E+05	1.81E+05	13.61062006	Integrated
+6	1	7.52E+04	1.58E+05	109.7426832	Integrated
+6	2	2.69E+04	9.17E+03	-65.91681398	Manual Rescale
+6	3	5.69E+04	2.42E+04	-57.39601748	Manual Rescale
+6	4	1.05E+04	5.96E+03	-43.19468997	Manual Rescale
+6	5	2.83E+04	1.13E+04	-60.23628298	Manual Rescale
+6	6	9.32E+03	1.06E+04	13.61062006	Aval Fixed w.r.t. (6-0)
+6	7	7.66E+03	8.70E+03	13.61062006	Aval Fixed w.r.t. (6-0)
+6	8	8.78E+03	9.98E+03	13.61062006	Manual Rescale
+6	9	1.31E+02	1.49E+02	13.61062006	Aval Fixed w.r.t. (6-0)
+7	0	1.27E+05	1.53E+05	20.7920181	Integrated
+7	1	1.10E+05	2.10E+05	90.9232454	Integrated
+7	2	2.78E+03	1.68E+03	-39.60399095	Manual Rescale
+7	3	7.62E+04	2.30E+04	-69.80199547	Manual Rescale
+7	4	1.00E+03	1.21E+03	20.7920181	Aval Fixed w.r.t (7-0)
+7	5	4.18E+04	1.67E+04	-60.13863403	Aval Fixed w.r.t (7-0)
+7	6	8.60E+02	1.04E+03	20.7920181	Aval Fixed w.r.t (7-0)
+7	7	2.10E+04	2.54E+04	20.7920181	Aval Fixed w.r.t (7-0)
+7	8	3.44E+01	4.16E+01	20.7920181	Aval Fixed w.r.t (7-0)
+7	9	8.32E+03	1.00E+04	20.7920181	Aval Fixed w.r.t (7-0)
+8	0	1.01E+05	1.25E+05	23.77321008	Integrated
+8	1	1.30E+05	1.78E+05	36.58905003	Integrated
+8	2	2.56E+03	3.17E+03	23.77321008	Aval Fixed w.r.t. (8-0)
+8	3	6.53E+04	4.85E+04	-25.73607395	Manual Rescale
+8	4	2.22E+04	2.75E+04	23.77321008	Aval Fixed w.r.t. (8-0)
+8	5	2.43E+04	1.50E+04	-38.11339496	Manual Rescale
+8	6	2.08E+04	2.57E+04	23.77321008	Aval Fixed w.r.t. (8-0)
+8	7	1.00E+04	1.24E+04	23.77321008	Aval Fixed w.r.t. (8-0)
+8	8	1.00E+04	1.24E+04	23.77321008	Aval Fixed w.r.t. (8-0)
+8	9	5.89E+03	7.29E+03	23.77321008	Aval Fixed w.r.t. (8-0)

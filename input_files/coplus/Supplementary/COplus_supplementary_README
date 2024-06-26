@@ -1,0 +1,18 @@
+This directory contains additional information related to the CO+ models. Three models are contained here:
+
+"MAH" - This represents the recreation of the CO+ model described in Magnani & A'Hearn (1986). 
+The relevant FlorPy input files are "Base(MAH)_energy_levels.txt" and "Base(MAH)_transitions.txt"
+The related PGOPHER file, BASE(MAH).pgo, was used to re-construct the energy level structure.
+The energy levels and transitions files were created from careful parsing of the line list exported by
+PGOPHER after running the .pgo file.
+
+"ECOTR" - This represents the same energy level structure as the "MAH" model, but with improved transition rates.
+See Bromley et al MNRAS 2023 for details.
+
+"ECO+" - This represents the most physical model with an expanded rovibronic level structure and experimentally
+benchmarked transition rates. 
+
+Plain text, comma-separated files are also provided which show both the original transition rates for the 
+A-X, B-X, B-A, and X-X transition rates, and those produced from our benchmarking efforts.
+
+Model outputs, inputs, and a copy of the code are also available on Zenodo at: https://zenodo.org/records/10520441

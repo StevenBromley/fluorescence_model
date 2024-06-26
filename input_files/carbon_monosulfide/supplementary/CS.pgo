@@ -1,0 +1,530 @@
+<?xml version="1.0"?>
+<Mixture Version="PGOPHER 11.0.138 10 Dec 2020 18:41  64 bit (fpc 3.3.1 x86_64-Darwin)" AllowComplex="True">
+  <Species Name="Species" Jmax="100">
+    <LinearMolecule Name="CS">
+      <LinearManifold Name="X" Initial="True" LimitSearch="True">
+        <Linear Name="Xv=0" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="0.0"/>
+          <Parameter Name="B" Value="0.81708"/>
+          <Parameter Name="D" Value="1.34e-06"/>
+        </Linear>
+        <Linear Name="Xv=1" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="1272.16"/>
+          <Parameter Name="B" Value="0.81116"/>
+          <Parameter Name="D" Value="1.34e-06"/>
+        </Linear>
+        <Linear Name="Xv=2" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="2531.35"/>
+          <Parameter Name="B" Value="0.80524"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=3" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="3777.6"/>
+          <Parameter Name="B" Value="0.79932"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=4" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="5010.92"/>
+          <Parameter Name="B" Value="0.79339"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=5" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="6231.33"/>
+          <Parameter Name="B" Value="0.78747"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=6" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="7438.87"/>
+          <Parameter Name="B" Value="0.78154"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=7" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="8633.55"/>
+          <Parameter Name="B" Value="0.77562"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+        <Linear Name="Xv=8" S="0" Lambda="Sigma+">
+          <Parameter Name="Origin" Value="9815.4"/>
+          <Parameter Name="B" Value="0.76969"/>
+          <Parameter Name="D" Value="1.35e-06"/>
+        </Linear>
+      </LinearManifold>
+      <LinearManifold Name="Pi" Initial="True" LimitSearch="True">
+        <Linear Name="Piv=0" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="38792.54"/>
+          <Parameter Name="B" Value="0.78232"/>
+          <Parameter Name="D" Value="1.7e-06"/>
+        </Linear>
+        <Linear Name="Piv=1" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="39848.82"/>
+          <Parameter Name="B" Value="0.77358"/>
+          <Parameter Name="D" Value="1.72e-06"/>
+        </Linear>
+        <Linear Name="Piv=2" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="40884.44"/>
+          <Parameter Name="B" Value="0.76417"/>
+          <Parameter Name="D" Value="1.75e-06"/>
+        </Linear>
+        <Linear Name="Piv=3" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="41900.33"/>
+          <Parameter Name="B" Value="0.75466"/>
+          <Parameter Name="D" Value="1.78e-06"/>
+        </Linear>
+        <Linear Name="Piv=4" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="42890.21"/>
+          <Parameter Name="B" Value="0.74637"/>
+          <Parameter Name="D" Value="1.8e-06"/>
+        </Linear>
+        <Linear Name="Piv=5" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="43861.11"/>
+          <Parameter Name="B" Value="0.73698"/>
+          <Parameter Name="D" Value="1.83e-06"/>
+        </Linear>
+        <Linear Name="Piv=6" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="44808.75"/>
+          <Parameter Name="B" Value="0.72831"/>
+          <Parameter Name="D" Value="1.86e-06"/>
+        </Linear>
+        <Linear Name="Piv=7" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="45737.02"/>
+          <Parameter Name="B" Value="0.7184"/>
+          <Parameter Name="D" Value="1.88e-06"/>
+        </Linear>
+        <Linear Name="Piv=8" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="46645.07"/>
+          <Parameter Name="B" Value="0.70874"/>
+          <Parameter Name="D" Value="1.91e-06"/>
+        </Linear>
+      </LinearManifold>
+      <LinearManifold Name="jank" Initial="True" LimitSearch="True">
+        <Linear Name="jankv=0" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="38792.54"/>
+          <Parameter Name="B" Value="0.78232"/>
+          <Parameter Name="D" Value="1.7e-06"/>
+        </Linear>
+        <Linear Name="jankv=1" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="39848.82"/>
+          <Parameter Name="B" Value="0.77358"/>
+          <Parameter Name="D" Value="1.72e-06"/>
+        </Linear>
+        <Linear Name="jankv=2" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="40884.44"/>
+          <Parameter Name="B" Value="0.76417"/>
+          <Parameter Name="D" Value="1.75e-06"/>
+        </Linear>
+        <Linear Name="jankv=3" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="41900.33"/>
+          <Parameter Name="B" Value="0.75466"/>
+          <Parameter Name="D" Value="1.78e-06"/>
+        </Linear>
+        <Linear Name="jankv=4" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="42890.21"/>
+          <Parameter Name="B" Value="0.74637"/>
+          <Parameter Name="D" Value="1.8e-06"/>
+        </Linear>
+        <Linear Name="jankv=5" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="43861.11"/>
+          <Parameter Name="B" Value="0.73698"/>
+          <Parameter Name="D" Value="1.83e-06"/>
+        </Linear>
+        <Linear Name="jankv=6" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="44808.75"/>
+          <Parameter Name="B" Value="0.72831"/>
+          <Parameter Name="D" Value="1.86e-06"/>
+        </Linear>
+        <Linear Name="jankv=7" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="45737.02"/>
+          <Parameter Name="B" Value="0.7184"/>
+          <Parameter Name="D" Value="1.88e-06"/>
+        </Linear>
+        <Linear Name="jankv=8" S="0" Lambda="Pi">
+          <Parameter Name="Origin" Value="46645.07"/>
+          <Parameter Name="B" Value="0.70874"/>
+          <Parameter Name="D" Value="1.91e-06"/>
+        </Linear>
+      </LinearManifold>
+        <TransitionMoments Bra ="Pi" Ket ="X">
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.5072092422487505"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.18021433162055608"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.03229968228654806"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.008080037710988993"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.002596313465397986"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.00025024365463386"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.00023591610708104617"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.000490522590034386"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=0" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.00011140142363421453"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.2375663049418697"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.39506199711414647"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.23143970295558272"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.12281015238523739"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.03569968876696009"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.011368717209788116"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.004162625617062575"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.0007489024947008912"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=1" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.00042850327433153524"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.061056982790722594"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.29704243274986125"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.3099723467226741"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.2667291605492413"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.11425334999045712"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.042162824492519284"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.013505106514076954"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.004903957915536874"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=2" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.00011435623127150821"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.019947763261501928"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.12120970050359126"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.30153824974793686"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.22682545954298897"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.254534439201649"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.20583597705547327"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.09001506309312031"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.03142210723383304"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=3" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.012544148537677775"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.0020988191586742595"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.026851604431183066"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.24325994804689657"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.3053815941857489"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.11334916943612301"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.25428045835458096"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.1260452645207825"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.06556637107056057"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=4" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.025947748039549638"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.001172817113251478"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.0062719137985829945"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.05781234220986251"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.33671941202926264"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.26689777734117537"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.01165505801499889"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.1279307343003409"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.1518164130987693"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=5" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.09210857982028496"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.000974590522323623"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.0016563289371882262"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.018223172644483195"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.11122332983208905"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.28977704880873717"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.27684635133227325"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.09281668030934999"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.1305397808349421"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=6" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.18339604532283205"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.00019319960947383578"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.0010059484775153714"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.002818940714669684"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.03640189587936802"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.1648925509175829"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.3303321015321629"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.21653213592105502"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.1546239008098005"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=7" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.06973886345288115"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.0005161647381111879"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.00022927908493411027"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.00014690161578872406"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.006262808604114084"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.06164157143528195"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.21150028580147656"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.32933950916775356"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=7">
+          <Parameter Name="Strength" Value="0.12681366664165986"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Piv=8" Ket="Xv=8">
+          <Parameter Name="Strength" Value="0.18059791775328854"/>
+         </SphericalTransitionMoment>
+        </TransitionMoments>
+        <TransitionMoments Bra ="X" Ket ="X">
+         <SphericalTransitionMoment Bra="Xv=0" Ket="Xv=0">
+          <Parameter Name="Strength" Value="1.9706"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=1" Ket="Xv=0">
+          <Parameter Name="Strength" Value="-0.1466"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=2" Ket="Xv=0">
+          <Parameter Name="Strength" Value="0.00878"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=3" Ket="Xv=0">
+          <Parameter Name="Strength" Value="-0.000577"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=4" Ket="Xv=0">
+          <Parameter Name="Strength" Value="3.26e-05"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=0">
+          <Parameter Name="Strength" Value="1.95e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=0">
+          <Parameter Name="Strength" Value="-1.73e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=0">
+          <Parameter Name="Strength" Value="3.07e-07"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=1" Ket="Xv=1">
+          <Parameter Name="Strength" Value="1.94"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=2" Ket="Xv=1">
+          <Parameter Name="Strength" Value="-0.207"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=3" Ket="Xv=1">
+          <Parameter Name="Strength" Value="0.0153"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=4" Ket="Xv=1">
+          <Parameter Name="Strength" Value="-0.00117"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=1">
+          <Parameter Name="Strength" Value="7.68e-05"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=1">
+          <Parameter Name="Strength" Value="1.69e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=1">
+          <Parameter Name="Strength" Value="-1.66e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=1">
+          <Parameter Name="Strength" Value="-9.23e-07"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=2" Ket="Xv=2">
+          <Parameter Name="Strength" Value="1.91"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=3" Ket="Xv=2">
+          <Parameter Name="Strength" Value="-0.253"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=4" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.0218"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=2">
+          <Parameter Name="Strength" Value="-0.00189"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=2">
+          <Parameter Name="Strength" Value="0.000149"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=2">
+          <Parameter Name="Strength" Value="-5.71e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=2">
+          <Parameter Name="Strength" Value="1.9e-06"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=3" Ket="Xv=3">
+          <Parameter Name="Strength" Value="1.88"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=4" Ket="Xv=3">
+          <Parameter Name="Strength" Value="-0.291"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.0284"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=3">
+          <Parameter Name="Strength" Value="-0.00275"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=3">
+          <Parameter Name="Strength" Value="0.000259"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=3">
+          <Parameter Name="Strength" Value="-2.39e-05"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=4" Ket="Xv=4">
+          <Parameter Name="Strength" Value="1.85"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=4">
+          <Parameter Name="Strength" Value="-0.325"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.0351"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=4">
+          <Parameter Name="Strength" Value="-0.00376"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=4">
+          <Parameter Name="Strength" Value="0.000412"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=5" Ket="Xv=5">
+          <Parameter Name="Strength" Value="1.82"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=5">
+          <Parameter Name="Strength" Value="-0.355"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=5">
+          <Parameter Name="Strength" Value="0.0419"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=5">
+          <Parameter Name="Strength" Value="-0.00491"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=6" Ket="Xv=6">
+          <Parameter Name="Strength" Value="1.79"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=6">
+          <Parameter Name="Strength" Value="-0.382"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=6">
+          <Parameter Name="Strength" Value="0.0488"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=7" Ket="Xv=7">
+          <Parameter Name="Strength" Value="1.76"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=7">
+          <Parameter Name="Strength" Value="-0.408"/>
+         </SphericalTransitionMoment>
+         <SphericalTransitionMoment Bra="Xv=8" Ket="Xv=8">
+          <Parameter Name="Strength" Value="1.73"/>
+         </SphericalTransitionMoment>
+        </TransitionMoments>
+      </LinearMolecule>
+  </Species>
+  <Parameter Name="Temperature" Value="5700"/>
+  <Parameter Name="Fmin" Value="0"/>
+  <Parameter Name="Fmax" Value="70000"/>
+</Mixture>
