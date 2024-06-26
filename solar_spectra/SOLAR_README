@@ -3,7 +3,7 @@ to avoid the 100 MB file size limit on GitHub. When uncompressed the files are ~
 
 I recommend utilizing the second solar spectrum, described below.
 
-The first, 0-2730_vac.txt, is described in Bromley et al 2023. The data are in two column format,
+The first, 0-2730_vac.txt, is described in Bromley et al 2021. The data are in two column format,
 with Column 0 being Wavelength in vacuum nm. Column 1 (the second column using 0-indexing)
 contains the solar flux in units of W/m^2/nm at r = 1 AU
 
