@@ -683,7 +683,10 @@ def matrix_solve(lhs,rhs):
     """
     SJB
 
-    Updated June 2024. This solves the matrix equations Ax=B via multiple methods if needed. After each solution, we check for negative populations.
+    Updated Feb 2025. This solves the matrix equations Ax=B via multiple methods if needed. After each solution,
+    we perform a few checks to verify validity of the matrix inversion and resulting level populations.
+
+    Fix added Feb 13 2025 to handle cases where the normal np.linalg.solve solution fails.
     
     If ALL populations are negative, the solution is still valid but must be multiplied by -1. If the populations are a mix of positive and real numbers, the solution is
     invalid, and we invoke the next method.
@@ -699,7 +702,7 @@ def matrix_solve(lhs,rhs):
     #We need to do this iteratively. For most systems, the solution easily follows from np.linalg.inv.    
     condition_number = np.linalg.cond(lhs)
     print('Matrix Condition Number: {:.2e}'.format(condition_number))
-
+    neg_check = 10 #This ensures that the least squares solution is called if the np.linalg.solve() fails.
     pops = np.linalg.solve(lhs,rhs)
     if (zeros_check(pops) == False):
         solve_end = time.time()
@@ -721,7 +724,8 @@ def matrix_solve(lhs,rhs):
         #In this case, the matrix has a very large condition number and there is some doubt in the standard matrix inverse solution method. Instead, we apply a least squares solver:
         lstsq_solution = np.linalg.lstsq(lhs,rhs,rcond=None)
         pops = lstsq_solution[0]
-        if (zeros_check(pops) == False):
+        neg_check = 0 #Reset the negative solution indicator.
+        if (zeros_check(pops) == False): #This is executed if no zeros are in the solution. Proceed to check for negative populations
             solve_end = time.time()
             print('Least-squares matrix solution completed in {:} seconds. Checking for negative values...'.format(round(solve_end - solve_start_time,3)))
             neg_check = 0
